@@ -24,3 +24,5 @@ nbproject
 _notes
 dwsync.xml
 logs/*
+
+craft/plugins/**/vendor
