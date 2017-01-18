@@ -1,0 +1,43 @@
+{% cache globally %}
+<div class="header__top">
+    <div class="container">
+        <ul class="top-nav">
+            <li class="dropdown">
+                <a href="" data-toggle="dropdown">Hi Guest!</a>
+
+                <ul class="dropdown-menu">
+                    <li><a href="">Profile</a></li>
+                    <li><a href="">Saved Searches</a></li>
+                    <li><a href="">Saved Agents</a></li>
+                    <li><a href="">Saved Listings</a></li>
+                    <li><a href="">Logout</a></li>
+                </ul>
+            </li>
+
+            {#
+            # Place social media links here?
+            #}
+            <li class="pull-right top-nav__icon">
+                <a href=""><i class="zmdi zmdi-facebook"></i></a>
+            </li>
+            <li class="pull-right top-nav__icon">
+                <a href=""><i class="zmdi zmdi-twitter"></i></a>
+            </li>
+            <li class="pull-right top-nav__icon">
+                <a href=""><i class="zmdi zmdi-google"></i></a>
+            </li>
+
+            <li class="pull-right hidden-xs">
+                <span>
+                    <i class="zmdi zmdi-email"></i>hello@Roost.com
+                </span>
+            </li>
+            <li class="pull-right hidden-xs">
+                <span>
+                    <i class="zmdi zmdi-phone"></i>001-541-754-3010
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endcache %}
