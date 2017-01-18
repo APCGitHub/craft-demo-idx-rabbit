@@ -1,0 +1,90 @@
+{% spaceless %}
+
+{% if field is defined %}
+	{% set key = random() %}
+	{% set nameKey = "filter[" ~ field ~ "][" ~ key ~ "]" %}
+
+	<input type="hidden" name="{{ nameKey }}[type]" value="between">
+
+	{% if clause is defined and clause == 'or' %}
+		<input type="hidden" name="{{ nameKey }}[clause]" value="or">
+	{% endif %}
+
+	{# === WRAPPER ELEMENT === #}
+	{% if wrapper is defined and wrapper[0] is defined %}
+		{% if wrapper[0]['tag'] is defined %}
+			<{{- wrapper[0].tag | trim | lower }} 
+				{% if wrapper[0]['class'] is defined %} class="{{ wrapper[0].class }}" {% endif %}
+				{% if wrapper[0]['id'] is defined %} id="{{ wrapper[0].id }}"{% endif -%}>
+		{% endif %}
+	{% endif %}
+
+	{% include "forms/includes/search/number.html" with {
+		style: (style is defined and style[0] is defined ? style[0] : null),
+		class: (class is defined and class[0] is defined ? class[0] : null),
+		id: (id is defined and id[0] is defined ? id[0] : null),
+		type: 'between',
+		size: (size is defined and size[0] is defined ? size[0] : null),
+		field: (nameKey is defined ? ( nameKey ~ "[start]") : null),
+		value: (values is defined and values[0] is defined ? values[0] : null),
+		disabled: (disabled is defined and disabled[0] ? disabled[0] : null),
+		readonly: (readonly is defined and readonly[0] ? readonly[0] : null),
+		title: (title is defined and title[0] ? title[0] : null),
+		placeholder: (placeholder is defined and placeholder[0] ? placeholder[0] : null)
+	} only %}
+
+	{% if wrapper is defined and wrapper[0] is defined %}
+		{% if wrapper[0]['tag'] is defined %}
+			</{{- wrapper[0].tag | trim | lower -}}>
+		{% endif %}
+	{% endif %}
+
+	{# === BETWEEN ELEMENT === #}
+	{{ between | raw }}
+
+	{# === WRAPPER ELEMENT === #}
+	{% if wrapper is defined %}
+		{% if (wrapper | length) == 1 %}
+			{% if wrapper[0]['tag'] is defined %}
+				<{{ wrapper[0].tag | trim | lower }} 
+					{% if wrapper[0]['class'] is defined %} class="{{ wrapper[0].class }}" {% endif %}
+					{% if wrapper[0]['id'] is defined %} id="{{ wrapper[0].id }}"{% endif %}>
+			{% endif %}
+		{% elseif (wrapper | length) == 2 %}
+			{% if wrapper[1]['tag'] is defined %}
+				<{{ wrapper[1].tag | trim | lower }} 
+					{% if wrapper[1]['class'] is defined %} class="{{ wrapper[1].class }}" {% endif %}'{% if wrapper[1]['id'] is defined %} id="{{ wrapper[1].id }}"{% endif %}'>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+
+	{% include "forms/includes/search/number.html" with {
+		style: (style is defined and style[1] is defined ? style[1] : null),
+		class: (class is defined and class[1] is defined ? class[1] : null),
+		id: (id is defined and id[1] is defined ? id[1] : null),
+		type: 'between',
+		size: (size is defined and size[1] is defined ? size[1] : null),
+		field: (nameKey is defined ? (nameKey ~ "[end]") : null),
+		value: (values is defined and values[1] is defined ? values[1] : null),
+		disabled: (disabled is defined and disabled[1] ? disabled[1] : null),
+		readonly: (readonly is defined and readonly[1] ? readonly[1] : null),
+		title: (title is defined and title[1] ? title[1] : null),
+		placeholder: (placeholder is defined and placeholder[1] ? placeholder[1] : null)
+	} only %}
+
+	{% if wrapper is defined %}
+		{% if (wrapper | length) == 1 %}
+			{% if wrapper[0]['tag'] is defined %}
+				</{{- wrapper[0].tag | trim | lower -}}>
+			{% endif %}
+		{% elseif (wrapper | length) == 2 %}
+			{% if wrapper[1]['tag'] is defined %}
+				</{{- wrapper[1].tag | trim | lower -}}>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% else %}
+	<p>Missing required {field} param.</p>
+{% endif %}
+
+{% endspaceless %}

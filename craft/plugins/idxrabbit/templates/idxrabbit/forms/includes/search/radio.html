@@ -1,0 +1,40 @@
+{% spaceless %}
+
+{% set key = random() %}
+
+{% if field is defined and field %}
+	{% if field starts with 'filter[' %}
+		{# coming form parent #}
+
+		{% set nameKey = field %}
+	{% else %}
+		{# called directly #}
+
+		{% set nameKey = "filter[" ~ field ~ "][" ~ key ~ "]" %}
+	{% endif %}
+
+	{% if type is defined and type %}
+		<input type="hidden" name="{{ nameKey }}[type]" value="{{ type }}">
+	{% endif %}
+
+	{% if modifier is defined and modifier %}
+		<input type="hidden" name="{{ nameKey }}[modifier]" value="{{modifier}}">
+	{% endif %}
+
+	{% if clause is defined and clause == 'or' %}
+		<input type="hidden" name="{{ nameKey }}[clause]" value="or">
+	{% endif %}
+
+	<input type="radio"
+		{% if value is defined and value %} value="{{ value }}"{% endif %}
+		{% if id is defined and id %} id="{{ id }}"{% endif %}
+		{% if class is defined and class %} class="{{ class }}"{% endif %}
+		name="{{ nameKey }}[value]"
+		{% if checked is defined and checked %} checked{% endif %}
+		{% if disabled is defined and disabled %} disabled{% endif %}>
+
+{% else %}
+	<p>Missing required {field/fields} param</p>
+{% endif %}
+
+{% endspaceless %}

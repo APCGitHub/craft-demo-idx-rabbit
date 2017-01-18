@@ -1,0 +1,17 @@
+{% spaceless %}
+
+<textarea
+	{% if style is defined and style %} style="{{ style }}"{% endif %}
+	{% if class is defined and class %} class="{{ class }}"{% endif %}
+	{% if id is defined and id %} id="{{ id }}"{% endif %}
+	{% if rows is defined %} rows="{{ rows }}"{% endif %}
+	{% if cols is defined %} cols="{{ cols }}"{% endif %}
+	{% if name is defined %} name="{{ name }}"{% endif %}
+	{% if disabled is defined and disabled %} disabled {% endif %}
+	{% if readonly is defined and readonly %} readonly {% endif %}
+	{% if title is defined %} title="{{ title }}"{% endif %}
+	{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}>
+	{%- if value is defined and value %}{{ value }}{% endif -%}
+	</textarea>
+
+{% endspaceless %}

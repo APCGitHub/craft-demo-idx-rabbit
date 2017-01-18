@@ -1,0 +1,43 @@
+{% spaceless %}
+
+{% set key = random() %}
+
+{% if field is defined and field %}
+	{% if field starts with 'filter[' %}
+		{# coming form parent #}
+
+		{% set name = field %}
+	{% else %}
+		{# called directly #}
+
+		{% set nameKey = "filter[" ~ field ~ "][" ~ key ~ "]" %}
+
+		{% if type is defined and type %}
+			{% if type != 'between' %}
+				<input type="hidden" name="{{ nameKey }}[type]" value="{{ type }}">
+			{% endif %}
+		{% else %}
+			<input type="hidden" name="{{ nameKey }}[type]" value="eq">
+		{% endif %}
+
+		{% set name = nameKey ~ "[value]" %}
+	{% endif %}
+
+	<input type="number"
+		{% if style is defined and style %} style="{{ style }}"{% endif %}
+		{% if class is defined and class %} class="{{ class }}"{% endif %}
+		{% if id is defined and id %} id="{{ id }}"{% endif %}
+		{% if size is defined and size %} size="{{ size }}"{% endif %}
+		name="{{ name }}"
+		{% if value is defined %} value="{{ value }}"{% endif %}
+		{% if maxlength is defined and maxlength %} maxlength="{{ maxlength }}"{% endif %}
+		{% if disabled is defined and disabled %} disabled {% endif %}
+		{% if readonly is defined and readonly %} readonly {% endif %}
+		{% if title is defined and title %} title="{{ title }}"{% endif %}
+		{% if placeholder is defined and placeholder %} placeholder="{{ placeholder }}"{% endif %}>
+
+{% else %}
+	<p>The {field} parameter is required.</p>
+{% endif %}
+
+{% endspaceless %}

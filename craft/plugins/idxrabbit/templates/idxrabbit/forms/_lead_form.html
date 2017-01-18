@@ -1,0 +1,26 @@
+<form method="POST" 
+	action="{{formAction()}}" 
+	style="{% if style is defined and style %}{{ style | trim }}{% endif %}"
+	id="{% if id is defined and id %}{{ id | trim }}{% endif %}" 
+	class="{% if class is defined and class %}{{ class | trim }}{% endif %}"
+>
+{{csrfField()}}
+
+<input type="hidden" name="action" value="{{ actionField('lead') }}">
+
+{# === These guys are required === #}
+<input type="hidden" name="listing_id" value="{{- listingId -}}">
+<input type="hidden" name="listing_key" value="{{- listingKey -}}">
+<input type="hidden" name="listing_url" value="{{- listingUrl -}}">
+
+{% if hasSocial() %}
+	{% set prospect = getProspect() %}
+
+	{% if prospect %}
+		<input type="hidden" name="agent_prospect_id" value="{{- prospect.id -}}">
+	{% endif %}
+{% endif %}
+
+{% if redirect is defined and redirect %}
+	<input type="hidden" name="redirect" value="{{ redirect|trim }}">
+{% endif %}

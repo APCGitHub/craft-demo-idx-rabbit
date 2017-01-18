@@ -1,0 +1,24 @@
+{% spaceless %}
+
+{% set types = ['text', 'email'] %}
+
+{% if type is defined and type in types %}
+	{% set _type = type %}
+{% else %}
+	{% set _type = 'text' %}
+{% endif %}
+
+<input type="{{ _type }}"
+	{% if style is defined and style %} style="{{ style }}"{% endif %}
+	{% if class is defined and class %} class="{{ class }}"{% endif %}
+	{% if id is defined and id %} id="{{ id }}"{% endif %}
+	{% if size is defined %} size="{{ size }}"{% endif %}
+	{% if name is defined %} name="{{ name }}"{% endif %}
+	{% if value is defined %} value="{{ value }}"{% endif %}
+	{% if maxlength is defined and maxlength %} maxlength="{{ maxlength }}"{% endif %}
+	{% if disabled is defined and disabled %} disabled {% endif %}
+	{% if readonly is defined and readonly %} readonly {% endif %}
+	{% if title is defined %} title="{{ title }}"{% endif %}
+	{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}>
+
+{% endspaceless %}

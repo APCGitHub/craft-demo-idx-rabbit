@@ -1,0 +1,12 @@
+<form method="POST" 
+	action="{{formAction()}}" 
+	id="{% if id is defined and id %}{{ id | trim }}{% endif %}" 
+	class="{% if class is defined and class %}{{ class | trim }}{% endif %}"
+	style="{% if style is defined and style %}{{ style | trim }}{% endif %}"
+>
+{{csrfField()}}
+
+<input type="hidden" name="action" value="{{ actionField('social_login') }}">
+
+{# === These guys are required === #}
+<input type="hidden" name="provider" value="{{- provider -}}">

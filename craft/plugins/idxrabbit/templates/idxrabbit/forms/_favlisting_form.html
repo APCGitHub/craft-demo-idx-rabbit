@@ -1,0 +1,17 @@
+<form method="POST" 
+	action="{{formAction()}}" 
+	style="{% if style is defined and style %}{{ style | trim }}{% endif %}"
+	id="{% if id is defined and id %}{{ id | trim }}{% endif %}" 
+	class="{% if class is defined and class %}{{ class | trim }}{% endif %}"
+>
+{{csrfField()}}
+
+<input type="hidden" name="action" value="{{ actionField('favorite_listing') }}">
+
+{% if listingId is defined and listingId %}
+	<input type="hidden" name="listing_id" value="{{listingId}}">
+{% endif %}
+
+{% if redirect is defined and redirect %}
+	<input type="hidden" name="redirect" value="{{ redirect|trim }}">
+{% endif %}

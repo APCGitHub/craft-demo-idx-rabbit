@@ -1,0 +1,41 @@
+{% if search_id is defined and search_id %}
+
+{% set results = search(search_id, {
+	'$select': 'ListPrice, PublicRemarks',
+	'$top': 12,
+	'$orderby': 'ListPrice desc'
+}) %}
+
+<div class="row">
+	<div class="col-sm-12">
+		{% if results['errors'] is defined and results.errors %}
+			{% for error in results.errors %}
+				{% if error['message'] is defined %}
+					<div class="alert alert-danger">{{error.message}}</div>
+				{% else %}
+					<div class="alert alert-danger">An error occurred</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			{% set listings = results.data %}
+
+			{% for row in listings | batch(3) %}
+				<div class="row">
+				{% for listing in row %}
+					<div class="col-sm-4">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<h1>${{listing.ListPrice | number_format(0)}}</h1>
+								<p>{{listing.PublicRemarks}}</p>	
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				</div>
+			{% else %}
+				<p>No results for this search.</p>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
+{% endif %}

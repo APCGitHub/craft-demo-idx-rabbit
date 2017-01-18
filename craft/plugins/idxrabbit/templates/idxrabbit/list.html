@@ -1,0 +1,45 @@
+{% set results = listings({
+	'$top': (limit is defined) ? limit : 100,
+	'$skip': (page is defined) ? (page-1)*limit : 0,
+	'$orderby': 'ListPrice desc'
+}) %}
+
+{% if results['errors'] is defined and results.errors %}
+	{% for error in results.errors %}
+		{% if error['message'] is defined %}
+			<div class="alert alert-danger">{{error.message}}</div>
+		{% else %}
+			<div class="alert alert-danger">An error occurred</div>
+		{% endif %}
+	{% endfor %}
+{% else %}
+	{% set listings = results.data %}
+	<table border="1" class="table table-striped">
+		<thead>
+			<th>ListingId</th>
+			<th>ListPrice</th>
+			<th>OriginalListPrice</th>
+			<th>ListAgentFullName</th>
+			<th>View</th>
+		</thead>
+		<tbody>
+			{% for listing in listings %}
+				<tr>
+					<td>{{ listing.ListingId }}</td>
+					<td>${{ listing.ListPrice | number_format(0, '.', ',') }}</td>
+					<td>${{ listing.OriginalListPrice | number_format(0, '.', ',') }}</td>
+					<td>{{ listing.ListAgentFullName | default('No Name') }}</td>
+					<td><a href="/listings/{{listing.ListingId}}">View</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div>
+		{% if page is defined and limit is defined %}
+			{% if page is defined and page > 1 %}
+				<a href="/listings?page={{page-1}}">Prev</a>
+			{% endif %}
+			<a href="/listings?page={{page+1}}">Next</a>
+		{% endif %}
+	</div>
+{% endif %}

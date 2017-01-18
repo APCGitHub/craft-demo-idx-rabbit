@@ -1,0 +1,77 @@
+{% if id is defined and id %}
+	{% set result = listing(id) %}
+
+	{% if result['errors'] is defined and result.errors %}
+		{% for error in result.errors %}
+			{% if error['message'] is defined %}
+				<div class="alert alert-danger">{{error.message}}</div>
+			{% else %}
+				<div class="alert alert-danger">An error occurred</div>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		{% set listing = result.data %}
+		<h1>${{ listing.ListPrice | number_format(0, '.', ',') }}</h1>
+		<p>Remarks: {{listing.PublicRemarks}}</p>
+
+		{% include "agent/_details.html" with listing only %}
+
+		{% if hasSocial() %}
+			{% if likedListing(listing.ListingId) %}
+				<button class="btn btn-default"><i class="fa fa-check fa-fw"></i>Liked</button>
+			{% else %}
+				{{ favListingForm({
+					id: 'fav-listing-form',
+					listingId: listing.ListingId
+				}) }}
+					<button class="btn btn-default">
+						<i class="fa fa-heart"></i>&nbsp;Favorite
+					</button>
+				{{ formClose() }}
+			{% endif %}
+		{% endif %}
+
+		<div class="row" style="margin-top:10px">
+			<div class="col-sm-12">
+				{% if hasSocial('facebook') %}
+					<button class="btn btn-default"><i class="fa fa-check"></i> Facebook</button>
+				{% else %}
+					{{ socialLoginForm({
+						id: 'facebook-login',
+						style: 'display:inline-block',
+						provider: 'facebook'
+					}) }}
+						<button class="btn btn-primary"><i class="fa fa-facebook"></i></button>
+					{{ formClose() }}
+				{% endif %}
+
+				{% if hasSocial('twitter') %}
+					<button class="btn btn-default"><i class="fa fa-check"></i> Twitter</button>
+				{% else %}
+					{{ socialLoginForm({
+						id: 'twitter-login',
+						style: 'display:inline-block',
+						provider: 'twitter'
+					}) }}
+						<button class="btn btn-primary"><i class="fa fa-twitter"></i></button>
+					{{ formClose() }}
+				{% endif %}
+
+				{% if hasSocial('google') %}
+					<button class="btn btn-default"><i class="fa fa-check"></i> Google</button>
+				{% else %}
+					{{ socialLoginForm({
+						id: 'google-login',
+						style: 'display:inline-block',
+						provider: 'google'
+					}) }}
+						<button class="btn btn-primary"><i class="fa fa-google"></i></button>
+					{{ formClose() }}
+				{% endif %}
+			</div>
+		</div>
+
+	{% endif %}
+{% else %}
+	<p>No listing id was passed in.</p>
+{% endif %}
