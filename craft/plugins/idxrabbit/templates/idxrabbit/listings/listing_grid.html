@@ -1,0 +1,38 @@
+{% if listing is defined and listing is not null %}
+<div class="listings-grid__item">
+    <a href="listing-detail.html">
+        <div class="listings-grid__main">
+            <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
+            <div class="listings-grid__price">${{ listing.ListPrice | number_format(0, '.', ',') }}</div>
+        </div>
+
+        <div class="listings-grid__body">
+            <small>{{- listing.StreetNumberNumeric -}}&nbsp;{{- listing.StreetName -}} {% if listing.StreetSuffix %}&nbsp;{{- listing.StreetSuffix -}}{% endif %},&nbsp;{{- listing.City -}}</small>
+            <h5>Integer tempor luctus maximus</h5>
+        </div>
+
+        <ul class="listings-grid__attrs">
+            <li><i class="listings-grid__icon listings-grid__icon--bed"></i> 03</li>
+            <li><i class="listings-grid__icon listings-grid__icon--bath"></i> 02</li>
+            <li><i class="listings-grid__icon listings-grid__icon--parking"></i> 02</li>
+        </ul>
+    </a>
+
+    {% if hasSocial() %}
+        <div class="actions listings-grid__favorite">
+            <div class="actions__toggle">
+                {% if likedListing(listing.ListingId) %}
+                    <i class="zmdi zmdi-favorite"></i>
+                {% else %}
+                    {{ favListingForm({
+                        class: 'fav-listing',
+                        listingId: listing.ListingId
+                    }) }}
+                        <i class="zmdi zmdi-favorite-outline"></i>
+                    {{ formClose() }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endif %}

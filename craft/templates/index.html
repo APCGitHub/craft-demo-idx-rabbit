@@ -3,5 +3,7 @@
 {% block title %}Main {{parent()}} {% endblock %}
 
 {% block content %}
-	hallo
+	{{ craft.idxRabbit.render('list', {
+		limit: 12
+	}) }}
 {% endblock %}
