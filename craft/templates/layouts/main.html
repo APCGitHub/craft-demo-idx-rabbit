@@ -1,6 +1,7 @@
 {% extends "layouts/app.html" %}
 
 {% block body %}
+    {% set navSearch = true %}
 	<header id="header">
 		<!-- Top Nav -->
 		{% include "layouts/includes/_top_nav.html" %}
@@ -8,12 +9,26 @@
 		<!-- Main Nav -->
         {% include "layouts/includes/_main_nav.html" %}
 
-        <!-- Nav Search -->
-        {% include "layouts/includes/_nav_search.html" %}
+        {##
+        # Child can choose what to do here 
+        # but by default we have the include
+        #}
+        {% block navSearch %}
+            <!-- Nav Search -->
+            {% include "layouts/includes/_nav_search.html" %}
+        {% endblock %}
 
-        <!-- Nav Recommended Listings -->
-        {% include "layouts/includes/_nav_recommended.html" %}
+        {##
+        # Child can choose what to do here 
+        # but by default we have the include
+        #}
+        {% block navRecommended %}
+            <!-- Nav Recommended Listings -->
+            {% include "layouts/includes/_nav_recommended.html" %}
+        {% endblock %}
 	</header>
+
+    {% block actionHeader %}{% endblock %}
 
 	<section class="section">
 		<div class="container">
