@@ -37,3 +37,4 @@ dwsync.xml
 logs/*
 
 craft/plugins/**/vendor
+craft/plugins/idxrabbit/templates/idxrabbit/cache
