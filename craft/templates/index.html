@@ -4,6 +4,8 @@
 
 {% block content %}
 	{{ craft.idxRabbit.render('list', {
-		limit: 12
+		where: 'ListPrice ge 0',
+		limit: 12,
+		orderBy: 'ListPrice desc'
 	}) }}
 {% endblock %}

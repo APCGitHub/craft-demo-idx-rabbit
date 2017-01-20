@@ -1,8 +1,8 @@
 {% set results = listings({
-	'$filter': 'ListPrice gt 0', 
+	'$filter': (where is defined) ? where : '', 
 	'$top': (limit is defined) ? limit : 100,
 	'$skip': (page is defined) ? (page-1)*limit : 0,
-	'$orderby': 'ListPrice desc'
+	'$orderby': (orderBy is defined) ? orderBy : ''
 }) %}
 
 <div class="row listings-grid">
