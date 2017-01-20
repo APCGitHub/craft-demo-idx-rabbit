@@ -5,7 +5,6 @@
 	'$orderby': (orderBy is defined) ? orderBy : ''
 }) %}
 
-<div class="row listings-grid">
 {% if results['errors'] is defined and results.errors %}
 	{% for error in results.errors %}
 		{% if error['message'] is defined %}
@@ -17,10 +16,5 @@
 {% else %}
 	{% set listings = results.data %}
 	
-	{% for listing in listings %}
-		<div class="col-sm-6 col-md-3">
-			{% include "listings/listing_grid.html" with {'listing': listing} only %}
-		</div>
-	{% endfor %}
+	{% include "listings/grid.html" with {'listings': listings} only %}
 {% endif %}
-</div>
