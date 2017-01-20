@@ -36,6 +36,7 @@ nbproject
 _notes
 dwsync.xml
 logs/*
+.env
 
 craft/plugins/**/vendor
 craft/plugins/idxrabbit/templates/idxrabbit/cache
