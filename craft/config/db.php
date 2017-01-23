@@ -12,17 +12,24 @@ return array(
 		'tablePrefix' => 'craft'
 	),
 
+	'.app' => array(
+		'server' => getenv('DB_HOST', ''),
+		'database' => getenv('DB_DATABASE', ''),
+		'user' => getenv('DB_USERNAME', ''),
+		'password' => getenv('DB_PASSWORD', ''),
+	),
+
 	'.dev' => array(
-		'server' => 'localhost',
-		'database' => 'craft_demo_idxrabbit',
-		'user' => 'root',
-		'password' => 'root',
+		'server' => getenv('DB_HOST', ''),
+		'database' => getenv('DB_DATABASE', ''),
+		'user' => getenv('DB_USERNAME', ''),
+		'password' => getenv('DB_PASSWORD', ''),
 	),
 
 	'.com' => array(
-		'server' => 'localhost',
-		'database' => 'craft_demo_idxrabbit',
-		'user' => 'forge',
-		'password' => 'tCNjL1EhCIIHGFLHpWeA',
+		'server' => getenv('DB_HOST', ''),
+		'database' => getenv('DB_DATABASE', ''),
+		'user' => getenv('DB_USERNAME', ''),
+		'password' => getenv('DB_PASSWORD', ''),
 	)
 );
