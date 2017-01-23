@@ -7,12 +7,21 @@
 
 {% if search_id is defined and search_id %}
 	{% set results = search(search_id, {
-		'$top': 9,
+		'$top': 8,
 		'$orderby': 'ListPrice desc'
 	}) %}
 {% endif %}
 
 {% set listings = [] %}
+
+{% set noListingsBlock %}
+	<div class="card">
+		<div class="card__header">
+			<h1>No results</h1>
+			<small>Try adjusting your search parameters for more results.</small>
+		</div>
+	</div>
+{% endset %}
 
 {##
 # Should look into a common error block that we can reuse to keep things DRY
@@ -31,7 +40,10 @@
 		{% set listings = results.data %}
 	{% endif %}
 
-	{% embed "listings/list.html" with {'listings': listings} only %}
+	{% embed "listings/list.html" with {'listings': listings} %}
+		{% block emptyListings %}
+			{{ noListingsBlock }}
+		{% endblock %}
 		{% block aside %}
 			<aside class="col-sm-4 hidden-xs">
 			    <div class="card">
@@ -134,5 +146,9 @@
 		{% set listings = results.data %}
 	{% endif %}
 
-	{% include "listings/grid.html" with {'listings': listings} only %}
+	{% embed "listings/grid.html" with {'listings': listings} %}
+		{% block emptyListings %}
+			{{ noListingsBlock }}
+		{% endblock %}
+	{% endembed %}
 {% endif %}
