@@ -22,15 +22,24 @@ return array(
         'cpTrigger' => 'admin',
     ),
 
-    '.dev' => array(
-        'siteUrl' => 'http://craft.idxrabbit.dev',
+    '.app' => array(
+        'siteName' => getenv('APP_NAME', ''),
+        'siteUrl' => getenv('APP_URL', ''),
         'environmentVariables' => array(),
-        'devMode' => true,
+        'devMode' => getenv('APP_DEBUG', false),
+    ),
+
+    '.dev' => array(
+        'siteName' => getenv('APP_NAME', ''),
+        'siteUrl' => getenv('APP_URL', ''),
+        'environmentVariables' => array(),
+        'devMode' => getenv('APP_DEBUG', false),
     ),
 
     '.com' => array(
-        'siteUrl' => 'http://craft.idxrabbit.com',
+        'siteName' => getenv('APP_NAME', ''),
+        'siteUrl' => getenv('APP_URL', ''),
         'environmentVariables' => array(),
-        'devMode' => false,
+        'devMode' => getenv('APP_DEBUG', false),
     )    
 );
