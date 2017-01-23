@@ -329,4 +329,11 @@ $(document).ready(function () {
     if($('.ie9')[0]) {
         $('input, textarea').placeholder();
     }
+
+    /*--------------------------------------------
+        ICON FORM SUBMIT
+    ---------------------------------------------*/
+    $('.icon-submit-fav').click(function () {
+        $(this).parent('form').submit();
+    });
 });
