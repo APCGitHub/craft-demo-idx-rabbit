@@ -184,12 +184,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Anecka/IDX-Rabbit-Plugin-Core.git",
-                "reference": "51b063acca9c98083cb1189198b78e83a905ad18"
+                "reference": "09330de45237ec55c69af297795fa4d369daef81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Anecka/IDX-Rabbit-Plugin-Core/zipball/51b063acca9c98083cb1189198b78e83a905ad18",
-                "reference": "51b063acca9c98083cb1189198b78e83a905ad18",
+                "url": "https://api.github.com/repos/Anecka/IDX-Rabbit-Plugin-Core/zipball/09330de45237ec55c69af297795fa4d369daef81",
+                "reference": "09330de45237ec55c69af297795fa4d369daef81",
                 "shasum": ""
             },
             "require": {
@@ -215,7 +215,7 @@
                 "source": "https://github.com/Anecka/IDX-Rabbit-Plugin-Core/tree/master",
                 "issues": "https://github.com/Anecka/IDX-Rabbit-Plugin-Core/issues"
             },
-            "time": "2017-01-18 19:01:57"
+            "time": "2017-01-23 17:02:58"
         },
         {
             "name": "psr/http-message",

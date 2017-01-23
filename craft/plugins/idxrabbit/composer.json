@@ -1,13 +1,1 @@
-{
-	"repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Anecka/IDX-Rabbit-Plugin-Core"
-        }
-    ],	
-    "require": {
-    	"idxrabbit/cms-plugin-core": "dev-master",
-        "twig/twig": "~1.0",
-        "guzzlehttp/guzzle": "^6.2"
-    }
-}
+/Users/aclinton/Dev/Work/idx-rabbit-plugin/composer.json
