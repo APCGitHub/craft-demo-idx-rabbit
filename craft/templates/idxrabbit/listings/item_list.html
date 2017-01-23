@@ -1,0 +1,48 @@
+{% if listing is defined and listing is not null %}
+<div class="listings-grid__item">
+    <a href="listing-detail.html" class="media">
+        <div class="listings-grid__main pull-left">
+            <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
+            <div class="listings-grid__price">${{ listing.ListPrice | number_format(0, '.', ',') }}</div>
+        </div>
+
+        <div class="media-body">
+            <div class="listings-grid__body">
+                <small>{{- listing.StreetNumberNumeric -}}&nbsp;{{- listing.StreetName -}} {% if listing.StreetSuffix %}&nbsp;{{- listing.StreetSuffix -}}{% endif %},&nbsp;{{- listing.City -}}</small>
+            <h5>{{listing.PublicRemarks | slice(0, 50)}}</h5>
+            </div>
+            <ul class="listings-grid__attrs">
+                <li>
+                <i class="listings-grid__icon listings-grid__icon--bed"></i>
+                {{listing.BedroomsTotal | default('n/a')}}
+            </li>
+            <li>
+                <i class="listings-grid__icon listings-grid__icon--bath"></i>
+                {{listing.BathroomsFull | default('n/a') }}
+            </li>
+            <li>
+                <i class="listings-grid__icon listings-grid__icon--parking"></i>
+                {{listing.GarageSpaces | default('n/a')}}
+            </li>
+            </ul>
+        </div>
+    </a>
+
+    {% if hasSocial() %}
+        <div class="actions listings-grid__favorite">
+            <div class="actions__toggle">
+                {% if likedListing(listing.ListingId) %}
+                    <i class="zmdi zmdi-favorite"></i>
+                {% else %}
+                    {{ favListingForm({
+                        class: 'fav-listing',
+                        listingId: listing.ListingId
+                    }) }}
+                        <i class="zmdi zmdi-favorite-outline"></i>
+                    {{ formClose() }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,112 @@
+{% import "forms/search.html" as forms %}
+
+<div class="panel panel-default">
+{{ searchForm({
+	id: 'rets-search',
+	class: 'form-horizontal',
+	redirect: (redirect is defined and redirect) ? redirect : null
+}) }}
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="control-label col-sm-2">Search:</label>
+			<div class="col-sm-10">
+				{{ forms.multiFieldText({
+					type: 'contains',
+					id: 'wildcard_search',
+					fields: ['City', 'StateOrProvince', 'PostalCode', 'StreetName'],
+					class: 'form-control',
+					placeholder: 'Wildcard Search'
+				}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">ListPrice:</label>
+			<div class="col-sm-10">
+				<div class="row">
+					{{ forms.numberBetween({
+						wrapper: [{tag: 'div', class: 'col-sm-5'}],
+						between: '<div class="col-sm-2 control-label">between</div>',
+						id: ['price_start', 'price_end'],
+						field: 'ListPrice',
+						class: ['form-control input-group-lg', 'form-control input-group-lg'],
+						placeholder: ['Start Price', 'End Price'],
+						values: [180000, 200000]
+					}) }}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">Original:</label>
+			<div class="col-sm-10">
+				<div class="row">
+					{{ forms.selectBetween({
+						wrapper: [{tag: 'div', class: 'col-sm-5'}],
+						between: '<div class="col-sm-2 control-label">between</div>',
+						id: ['original_price_start', 'original_price_end'],
+						field: 'OriginalListPrice',
+						class: ['form-control select', 'form-control select'],
+						ranges: [{values: range(0, 500000, 50000)}, {values: range(0, 500000, 50000)}],
+						label: [0, '.', ',', '$']
+					}) }}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">City</label>
+			<div class="col-sm-10">
+				<div class="row">
+					{{ forms.checkboxGroup({
+						field: 'City',
+						id: 'city',
+						type: 'eq',
+						modifier: 'tolower',
+						wrapper: {tag: 'label', class: 'checkbox-inline'},
+						options: [
+							{value: 'columbus', label: 'Columbus'},
+							{value: 'cleveland', label: 'Cleveland'},
+							{value: 'cincinnati', label: 'Cincinnati'},
+							{value: 'toledo', label: 'Toledo'}
+						]
+					}) }}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">Baths</label>			
+			<div class="col-sm-4">
+				{{ forms.select({
+					field: 'BathroomsTotalInteger',
+					id: 'bed_num',
+					class: 'select form-control',
+					type: 'ge',
+					options: [
+						{value: null, label: 'any'},
+						{value: 1, label: '1'},
+						{value: 2, label: '2'},
+						{value: 3, label: '3'},
+					]
+				}) }}
+			</div>
+			<label class="control-label col-sm-2">Beds</label>			
+			<div class="col-sm-4">
+				{{ forms.select({
+					field: 'BedroomsTotal',
+					id: 'bed_num',
+					class: 'select form-control',
+					type: 'ge',
+					options: [
+						{value: null, label: 'any'},
+						{value: 1, label: '1'},
+						{value: 2, label: '2'},
+						{value: 3, label: '3'},
+					]
+				}) }}
+			</div>
+		</div>
+
+		<div class="text-center">
+			<button class="btn btn-primary" type="submit" value="submit">Search</button>
+		</div>
+	</div>
+{{ formClose() }}
+</div>
