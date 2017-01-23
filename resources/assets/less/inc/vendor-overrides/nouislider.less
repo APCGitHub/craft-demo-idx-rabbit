@@ -4,9 +4,25 @@
     border: 0;
 }
 
-.noUi-background {
+.noUi-background, .noUi-base {
     background: #dddddd;
     box-shadow: none;
+}
+
+.noUi-base {
+    .noUi-origin {
+        box-shadow: none;
+        
+        &:first-child {
+            background: @mdc-light-blue-500;
+            box-shadow: none;
+        }
+
+        &:last-child {
+            background: #dddddd;
+            box-shadow: none;
+        }
+    }
 }
 
 .noUi-horizontal {
