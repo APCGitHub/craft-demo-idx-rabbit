@@ -33,6 +33,7 @@ window.noUiSlider = require('nouislider');
 
 /* Theme scripts */
 require('./scripts/bootstrap');
+require('./components/bootstrap');
 
 /* Site wide functions */
 window.onload = () => {
