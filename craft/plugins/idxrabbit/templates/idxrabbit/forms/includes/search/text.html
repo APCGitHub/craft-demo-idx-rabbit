@@ -36,7 +36,12 @@
 		{% if disabled is defined and disabled %} disabled {% endif %}
 		{% if readonly is defined and readonly %} readonly {% endif %}
 		{% if title is defined %} title="{{ title }}"{% endif %}
-		{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}>
+		{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}
+		{% if attrs is defined and attrs|length %}
+			{% for attr in attrs %}
+				{{ attr.name }}="{{ attr.value }}"
+			{% endfor %}
+		{% endif %}>
 {% elseif fields is defined and fields|length %}
 	{# called directly #}
 
@@ -68,7 +73,12 @@
 		{% if disabled is defined and disabled %} disabled {% endif %}
 		{% if readonly is defined and readonly %} readonly {% endif %}
 		{% if title is defined %} title="{{ title }}"{% endif %}
-		{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}>
+		{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}
+		{% if attrs is defined and attrs|length %}
+			{% for attr in attrs %}
+				{{ attr.name }}="{{ attr.value }}"
+			{% endfor %}
+		{% endif %}>
 {% else %}
 	<p>Missing required {field/fields} param</p>
 {% endif %}
