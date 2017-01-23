@@ -40,3 +40,4 @@ logs/*
 
 craft/plugins/**/vendor
 craft/plugins/idxrabbit
+craft/templates/idxrabbit/cache
