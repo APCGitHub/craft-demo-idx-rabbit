@@ -7,7 +7,7 @@
 
 {% if search_id is defined and search_id %}
 	{% set results = search(search_id, {
-		'$top': 8,
+		'$top': 12,
 		'$orderby': 'ListPrice desc'
 	}) %}
 {% endif %}
@@ -152,3 +152,53 @@
 		{% endblock %}
 	{% endembed %}
 {% endif %}
+
+<div class="modal fade" id="logInModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h4 class="modal-title">
+                    Social Login
+                    <small>Connect to your social media accounts.</small>
+                </h4>
+            </div>
+            <div class="modal-body">
+            	{% if hasSocial('facebook') %}
+					<button class="btn btn--circle mdc-bg-indigo-500"><i class="zmdi zmdi-check"></i><i class="zmdi zmdi-facebook"></i></button>
+				{% else %}
+					{{ socialLoginForm({
+						id: 'facebook-login',
+						style: 'display:inline-block',
+						provider: 'facebook'
+					}) }}
+						<button class="btn btn--circle"><i class="zmdi zmdi-facebook"></i></button>
+					{{ formClose() }}
+				{% endif %}
+
+				{% if hasSocial('google') %}
+					<button class="btn btn--circle mdc-bg-red-700"><i class="zmdi zmdi-check"></i><i class="zmdi zmdi-google-plus"></i></button>
+				{% else %}
+					{{ socialLoginForm({
+						id: 'google-login',
+						style: 'display:inline-block',
+						provider: 'google'
+					}) }}
+						<button class="btn btn--circle"><i class="zmdi zmdi-google-plus"></i></button>
+					{{ formClose() }}
+				{% endif %}
+
+            	{% if hasSocial('twitter') %}
+					<button class="btn btn--circle mdc-bg-light-blue-500"><i class="zmdi zmdi-check"></i><i class="zmdi zmdi-twitter"></i></button>
+				{% else %}
+					{{ socialLoginForm({
+						id: 'twitter-login',
+						style: 'display:inline-block',
+						provider: 'twitter'
+					}) }}
+						<button class="btn btn--circle"><i class="zmdi zmdi-twitter"></i></button>
+					{{ formClose() }}
+				{% endif %}
+            </div>
+        </div>
+    </div>
+</div>

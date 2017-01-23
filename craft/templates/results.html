@@ -9,6 +9,9 @@
 {% block navRecommended %}{% endblock %}
 
 {% set layout = craft.request.getParam('layout') %}
+{% set page = craft.request.getParam('page') %}
+{% set orderBy = craft.request.getParam('orderBy') %}
+
 {% set query = craft.request.queryStringWithoutPath() %}
 
 {% block actionHeader %}
@@ -28,10 +31,10 @@
 	            <span class="action-header__small">Sort by :</span>
 
 	            <select class="select2">
-	                <option>Newest to oldest</option>
-	                <option>Oldest to Newest</option>
-	                <option>Price hight to low</option>
-	                <option>Price low to high</option>
+	                <option value="updated_at desc">Newest to oldest</option>
+	                <option value="updated_at asc">Oldest to Newest</option>
+	                <option value="ListPrice desc">Price hight to low</option>
+	                <option value="ListPrice asc">Price low to high</option>
 	            </select>
 	        </div>
 	    </div>
@@ -43,6 +46,8 @@
 
 	{{ craft.idxRabbit.render('results', {
 		search_id: search_id,
+		page: page,
+		orderBy: orderBy,
 		layout: layout
 	}) }}
 {% endblock %}
