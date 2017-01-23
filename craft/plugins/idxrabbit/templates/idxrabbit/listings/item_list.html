@@ -8,13 +8,22 @@
 
         <div class="media-body">
             <div class="listings-grid__body">
-                <small>304 East Wenatchee, WA 98801</small>
-                <h5>Nullam iddolor idnibh ultricies vehicula</h5>
+                <small>{{- listing.StreetNumberNumeric -}}&nbsp;{{- listing.StreetName -}} {% if listing.StreetSuffix %}&nbsp;{{- listing.StreetSuffix -}}{% endif %},&nbsp;{{- listing.City -}}</small>
+            <h5>{{listing.PublicRemarks | slice(0, 50)}}</h5>
             </div>
             <ul class="listings-grid__attrs">
-                <li><i class="listings-grid__icon listings-grid__icon--bed"></i> 01</li>
-                <li><i class="listings-grid__icon listings-grid__icon--bath"></i> 01</li>
-                <li><i class="listings-grid__icon listings-grid__icon--parking"></i> 00</li>
+                <li>
+                <i class="listings-grid__icon listings-grid__icon--bed"></i>
+                {{listing.BedroomsTotal | default('n/a')}}
+            </li>
+            <li>
+                <i class="listings-grid__icon listings-grid__icon--bath"></i>
+                {{listing.BathroomsFull | default('n/a') }}
+            </li>
+            <li>
+                <i class="listings-grid__icon listings-grid__icon--parking"></i>
+                {{listing.GarageSpaces | default('n/a')}}
+            </li>
             </ul>
         </div>
     </a>
