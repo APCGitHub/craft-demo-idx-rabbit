@@ -3,7 +3,7 @@
 {% block title %}Main {{parent()}} {% endblock %}
 
 {% block content %}
-	{{ craft.idxRabbit.render('list', {
+	{{ craft.idxRabbit.render('listings/full_width_grid.html', {
 		where: 'ListPrice ge 0',
 		limit: 12,
 		orderBy: 'ListPrice desc'
