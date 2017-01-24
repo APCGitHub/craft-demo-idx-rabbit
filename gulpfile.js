@@ -1,5 +1,7 @@
 const elixir = require('laravel-elixir');
 
+require('laravel-elixir-vue-2');
+
 elixir((mix) => {
 	mix.copy('./bower_components/lightgallery/dist/fonts/', 'public/fonts')
 		.copy('./bower_components/lightgallery/dist/img/', 'public/img');
