@@ -1,6 +1,6 @@
 {% if listing is defined and listing is not null %}
 <div class="listings-grid__item">
-    <a href="listing-detail.html" class="media">
+    <a href="/listings/{{listing.ListingId}}" class="media">
         <div class="listings-grid__main pull-left">
             <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
             <div class="listings-grid__price">${{ listing.ListPrice | number_format(0, '.', ',') }}</div>
@@ -38,7 +38,7 @@
                         class: 'fav-listing',
                         listingId: listing.ListingId
                     }) }}
-                        <i class="zmdi zmdi-favorite-outline"></i>
+                        <i class="zmdi zmdi-favorite-outline f-20 icon-submit-fav waves-effect"></i>
                     {{ formClose() }}
                 {% endif %}
             </div>
