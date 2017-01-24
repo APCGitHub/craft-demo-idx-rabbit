@@ -7,7 +7,8 @@ elixir((mix) => {
 			'./bower_components/select2/dist/css/select2.min.css',
 			'./bower_components/slick-carousel/slick/slick.css',
 			'./bower_components/nouislider/distribute/nouislider.min.css',
-			'./bower_components/rateYo/min/jquery.rateyo.min.css'
+			'./bower_components/rateYo/min/jquery.rateyo.min.css',
+			'./bower_components/Waves/dist/waves.min.css'
 		], 'resources/assets/css/build/vendor.css')
 		.less('app.less', 'resources/assets/css/build/app.css')
 		.styles([
