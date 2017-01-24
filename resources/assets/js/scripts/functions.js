@@ -1,5 +1,6 @@
 /* Waves js */
 const Waves = require('node-waves');
+const autosize = require('autosize');
 
 Waves.attach('.waves-effect');
 Waves.init();
@@ -229,13 +230,6 @@ $(document).ready(function () {
                     logo: "zmdi zmdi-google",
                     shareIn: "blank",
                     css: "rmds-item mdc-bg-red-400 animated bounceIn"
-                },
-                {
-                    share: "linkedin",
-                    label: "",
-                    logo: "zmdi zmdi-linkedin",
-                    shareIn: "blank",
-                    css: "rmds-item mdc-bg-blue-600 animated bounceIn"
                 }
             ]
         });
