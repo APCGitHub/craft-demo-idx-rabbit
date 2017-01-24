@@ -44,7 +44,7 @@
 {% block content %}
 	{% set search_id = craft.request.getParam('search_id') %}
 
-	{{ craft.idxRabbit.render('results', {
+	{{ craft.idxRabbit.render('listings/results', {
 		search_id: search_id,
 		page: page,
 		orderBy: orderBy,
