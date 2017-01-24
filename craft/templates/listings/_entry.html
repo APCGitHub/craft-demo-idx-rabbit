@@ -1,0 +1,13 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}Details {{ parent() }} {% endblock %}
+
+{% block navSearch %}{% endblock %}
+
+{% block navRecommended %}{% endblock %}
+
+{% block content %}
+	{{ craft.idxRabbit.render('listings/details.html', {
+		id: craft.request.getSegment(2)
+	}) }}
+{% endblock %}

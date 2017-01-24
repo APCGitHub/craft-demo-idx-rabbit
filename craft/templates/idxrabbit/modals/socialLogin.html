@@ -1,0 +1,50 @@
+{# Login Modal #}
+<div class="modal fade" id="logInModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h4 class="modal-title">
+                    Social Login
+                    <small>Connect to your social media accounts.</small>
+                </h4>
+            </div>
+            <div class="modal-body">
+                {% if hasSocial('facebook') %}
+                    <button class="btn btn--circle mdc-bg-indigo-500"><i class="zmdi zmdi-check"></i><i class="zmdi zmdi-facebook"></i></button>
+                {% else %}
+                    {{ socialLoginForm({
+                        id: 'facebook-login',
+                        style: 'display:inline-block',
+                        provider: 'facebook'
+                    }) }}
+                        <button class="btn btn--circle"><i class="zmdi zmdi-facebook"></i></button>
+                    {{ formClose() }}
+                {% endif %}
+
+                {% if hasSocial('google') %}
+                    <button class="btn btn--circle mdc-bg-red-700"><i class="zmdi zmdi-check"></i><i class="zmdi zmdi-google-plus"></i></button>
+                {% else %}
+                    {{ socialLoginForm({
+                        id: 'google-login',
+                        style: 'display:inline-block',
+                        provider: 'google'
+                    }) }}
+                        <button class="btn btn--circle"><i class="zmdi zmdi-google-plus"></i></button>
+                    {{ formClose() }}
+                {% endif %}
+
+                {% if hasSocial('twitter') %}
+                    <button class="btn btn--circle mdc-bg-light-blue-500"><i class="zmdi zmdi-check"></i><i class="zmdi zmdi-twitter"></i></button>
+                {% else %}
+                    {{ socialLoginForm({
+                        id: 'twitter-login',
+                        style: 'display:inline-block',
+                        provider: 'twitter'
+                    }) }}
+                        <button class="btn btn--circle"><i class="zmdi zmdi-twitter"></i></button>
+                    {{ formClose() }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
