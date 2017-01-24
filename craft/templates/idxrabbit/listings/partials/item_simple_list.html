@@ -1,0 +1,13 @@
+{% import "macros/listings.html" as listingMacros %}
+
+{% if listing is defined and listing is not null %}
+<a href="/listings/{{listing.ListingId}}" class="list-group-item media">
+    <div class="pull-left">
+        <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="" class="list-group__img" width="65">
+    </div>
+    <div class="media-body list-group__text">
+        <strong>{{ listingMacros.fullAddress(listing) }}</strong>
+        <small>${{ listing.ListPrice | number_format(0, '.', ',') }} . {{ listing.BedroomsTotal | default(0) }} Beds . {{ listing.BathroomsFull | default(0) }} Baths</small>
+    </div>
+</a>
+{% endif %}
