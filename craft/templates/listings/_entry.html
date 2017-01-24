@@ -8,6 +8,12 @@
 
 {% block content %}
 	{{ craft.idxRabbit.render('listings/details.html', {
-		id: craft.request.getSegment(2)
+		id: craft.request.getSegment(2),
+		url: craft.request.url
 	}) }}
+{% endblock %}
+
+{% block jsEmbed %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.min.js"></script>
 {% endblock %}
