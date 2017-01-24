@@ -22,9 +22,9 @@
         </div>
     </div>
 
-    {{ craft.idxRabbit.render('listings/recommended.html', {
+    {{ craft.idxRabbit.render('listings/partials/recommended.html', {
         limit: 9,
-        where: 'ListPrice gt 0',
+        where: 'ListPrice gt 0 and Latitude ne 0 and Longitude ne 0',
         orderBy: 'ListPrice desc'
     }) }}
 </div>
