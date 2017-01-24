@@ -1,4 +1,19 @@
+/* Waves js */
+const Waves = require('node-waves');
+
+Waves.attach('.waves-effect');
+Waves.init();
+
 $(document).ready(function () {
+    /*------------------------------
+        Attach waves to UI libraries
+    -------------------------------*/
+    $('.header__recommended .listings-grid').on('init', function (event, slick) {
+        setTimeout(() => {
+            Waves.attach('.slick-arrow', ['waves-float', 'waves-circle']);
+        }, 500);
+    });
+
     /*------------------------------
         Detect mobile device
     -------------------------------*/
@@ -52,7 +67,7 @@ $(document).ready(function () {
             speed: 300,
             slidesToShow: 4,
             slidesToScroll: 1,
-            dotsClass: 'slick-dots slick-dots-light',
+            dotsClass: 'slick-dots slick-dots-light waves-effect',
             infinite: true,
             responsive: [
                 {
@@ -337,3 +352,26 @@ $(document).ready(function () {
         $(this).parent('form').submit();
     });
 });
+
+window.onload = () => {
+    /*---------------------------------------------------------
+        Page Loader
+        - Using javascript to reduce jquery lib loading time
+    ----------------------------------------------------------*/
+    let fade = (element) => {
+        var op = 1;  // initial opacity
+        var timer = setInterval(() => {
+            if (op <= 0.1){
+                clearInterval(timer);
+                element.style.display = 'none';
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op -= op * 0.1;
+        }, 10);
+    }
+
+    setTimeout(() => {
+        fade(document.getElementById('page-loader'));
+    }, 200);
+};
