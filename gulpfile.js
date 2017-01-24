@@ -1,6 +1,9 @@
 const elixir = require('laravel-elixir');
 
 elixir((mix) => {
+	mix.copy('./bower_components/lightgallery/dist/fonts/', 'public/fonts')
+		.copy('./bower_components/lightgallery/dist/img/', 'public/img');
+
 	mix.styles([
 			'./bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css',
 			'./bower_components/animate.css/animate.min.css',
@@ -8,7 +11,9 @@ elixir((mix) => {
 			'./bower_components/slick-carousel/slick/slick.css',
 			'./bower_components/nouislider/distribute/nouislider.min.css',
 			'./bower_components/rateYo/min/jquery.rateyo.min.css',
-			'./bower_components/Waves/dist/waves.min.css'
+			'./bower_components/Waves/dist/waves.min.css',
+			'./bower_components/lightgallery/dist/css/lightgallery.min.css',
+			'./bower_components/lightgallery/dist/css/lg-transitions.min.css'
 		], 'resources/assets/css/build/vendor.css')
 		.less('app.less', 'resources/assets/css/build/app.css')
 		.styles([
