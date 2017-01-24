@@ -24,8 +24,10 @@
   "dependencies": {
     "autosize": "^3.0.20",
     "bootstrap": "^3.3.7",
+    "google-maps": "^3.2.1",
     "gulp": "^3.9.1",
     "jquery": "^3.1.1",
+    "laravel-elixir-vue-2": "^0.3.0",
     "lg-autoplay": "^1.0.2",
     "lg-fullscreen": "^1.0.1",
     "lg-hash": "^1.0.1",
