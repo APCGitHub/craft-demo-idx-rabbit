@@ -2,7 +2,7 @@
 	{% if listings is defined and listings is not null and listings|length %}
 		{% for listing in listings %}
 			<div class="col-sm-6 col-md-3">
-				{% include "listings/item_grid.html" with {'listing': listing} only %}
+				{% include "listings/partials/item_grid.html" with {'listing': listing} only %}
 			</div>
 		{% endfor %}
 	{% else %}

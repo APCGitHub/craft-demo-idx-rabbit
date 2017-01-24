@@ -1,1 +1,13 @@
-{% set results = listings() %}
+{% set results = listings({
+	'$filter': (where is defined) ? where : '', 
+	'$top': (limit is defined) ? limit : 10,
+	'$orderby': (orderBy is defined) ? orderBy : ''
+}) %}
+
+<div class="listings-grid">
+	{% set listings = results.data %}
+
+	{% for listing in listings %}
+		{% include "listings/partials/item_grid.html" with {'listing': listing} only %}
+	{% endfor %}
+</div>
