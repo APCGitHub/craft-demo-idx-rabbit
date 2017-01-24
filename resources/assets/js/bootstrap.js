@@ -13,6 +13,8 @@ Vue.http.interceptors.push((request, next) => {
     next();
 });
 
+window.$bus = new Vue();
+
 /* Sweetalert 2*/
 window.swal = require('sweetalert2');
 
@@ -24,6 +26,9 @@ require('select2');
 
 /* Slick carousel */
 require('slick-carousel');
+
+/* Lightgallery */
+require('lightgallery');
 
 /* nouislider */
 window.noUiSlider = require('nouislider');
