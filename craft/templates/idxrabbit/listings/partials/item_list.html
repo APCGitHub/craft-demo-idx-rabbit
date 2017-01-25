@@ -28,21 +28,8 @@
         </div>
     </a>
 
-    {% if hasSocial() %}
-        <div class="actions listings-grid__favorite">
-            <div class="actions__toggle">
-                {% if likedListing(listing.ListingId) %}
-                    <i class="zmdi zmdi-favorite"></i>
-                {% else %}
-                    {{ favListingForm({
-                        class: 'fav-listing',
-                        listingId: listing.ListingId
-                    }) }}
-                        <i class="zmdi zmdi-favorite-outline f-20 icon-submit-fav waves-effect"></i>
-                    {{ formClose() }}
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
+    <div class="actions listings-grid__favorite">
+        {% include "listings/partials/fav.html" %}
+    </div>
 </div>
 {% endif %}

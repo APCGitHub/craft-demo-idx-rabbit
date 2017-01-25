@@ -30,24 +30,7 @@
     </a>
 
     <div class="actions listings-grid__favorite">
-        {% if hasSocial() %}
-            <div>
-                {% if likedListing(listing.ListingId) %}
-                    <i class="zmdi zmdi-favorite mdc-text-red-500"></i>
-                {% else %}
-                    {{ favListingForm({
-                        class: 'fav-listing',
-                        listingId: listing.ListingId
-                    }) }}
-                        <i class="zmdi zmdi-favorite-outline f-20 icon-submit-fav waves-effect"></i>
-                    {{ formClose() }}
-                {% endif %}
-            </div>
-        {% else %}
-            <div data-toggle="modal" data-target="#logInModal">
-                <i class="zmdi zmdi-sign-in"></i>
-            </div>
-        {% endif %}
+        {% include "listings/partials/fav.html" %}
     </div>
 </div>
 {% endif %}

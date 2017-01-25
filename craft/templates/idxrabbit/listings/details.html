@@ -18,24 +18,8 @@
         <h2>{{ listingMacros.fullAddress(listing, {separated: false}) }}</h2>
 
         <div class="actions actions--section">
-            {% if hasSocial() %}
-                <div>
-                    {% if likedListing(listing.ListingId) %}
-                        <i class="zmdi zmdi-favorite mdc-text-red-500"></i>
-                    {% else %}
-                        {{ favListingForm({
-                            class: 'fav-listing',
-                            listingId: listing.ListingId
-                        }) }}
-                            <i class="zmdi zmdi-favorite-outline f-20 icon-submit-fav waves-effect"></i>
-                        {{ formClose() }}
-                    {% endif %}
-                </div>
-            {% else %}
-                <div data-toggle="modal" data-target="#logInModal">
-                    <i class="zmdi zmdi-sign-in"></i>
-                </div>
-            {% endif %}
+            {% include "listings/partials/fav.html" %}
+            
             <a href="" data-rmd-action="print"><i class="zmdi zmdi-print"></i></a>
             <div class="dropdown actions__email">
                 <a href="" data-toggle="dropdown"><i class="zmdi zmdi-email"></i></a>
