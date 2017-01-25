@@ -1,5 +1,5 @@
 {% set layoutClass = 'list' %}
-{% set allowedLayouts = ['list', 'grid'] %}
+{% set allowedLayouts = ['list', 'grid', 'map'] %}
 
 {% if layout in allowedLayouts %}
 	{% set layoutClass = layout %}
@@ -151,6 +151,24 @@
 			{{ noListingsBlock }}
 		{% endblock %}
 	{% endembed %}
+{% elseif layout == 'map' %}
+	{% if results['errors'] is defined and results.errors %}
+		{% for error in results.errors %}
+			{% if error['message'] is defined %}
+				<div class="alert alert-danger">{{error.message}}</div>
+			{% else %}
+				<div class="alert alert-danger">An error occurred</div>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		{% set listings = results.data %}
+	{% endif %}
+
+	<div class="card">
+		<div class="card__body">
+			<listings-map :listings="{{ listings | json_encode }}"></listings-map>
+		</div>
+	</div>
 {% endif %}
 
 {% include "modals/socialLogin.html" %}
