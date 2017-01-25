@@ -14,10 +14,18 @@ Vue.http.interceptors.push((request, next) => {
     body[Craft.csrfTokenName] = Craft.csrfTokenValue;
     request.body = body;
 
-    // console.log(request.body);
-
     next();
 });
+
+let accounting = require('accounting');
+
+Vue.prototype.filters = {
+	money(value, symbol, decimals, dec_symb, thous_symb) {
+		value = parseFloat(value);
+
+		return accounting.formatMoney(value, symbol, decimals, dec_symb, thous_symb);
+	}
+};
 
 Vue.http.options.emulateJSON = true;
 
@@ -39,7 +47,7 @@ require('slick-carousel');
 require('lightgallery');
 
 /* nouislider */
-window.noUiSlider = require('nouislider');
+//window.noUiSlider = require('nouislider');
 
 /* Theme scripts */
 require('./scripts/bootstrap');
