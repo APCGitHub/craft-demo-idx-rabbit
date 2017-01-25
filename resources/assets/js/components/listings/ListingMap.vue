@@ -5,9 +5,6 @@
 <script type="text/babel">
 	import GoogleMapsLoader from 'google-maps';
 
-	GoogleMapsLoader.KEY = 'AIzaSyAB7qyMHJF18W65Gy3qzOHAtv44N5n-e2Y';
-	//GoogleMapsLoader.LIBRARIES = ['geometry'];
-
 	export default {
 		props: ['listing'],
 		data() {
