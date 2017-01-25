@@ -1,5 +1,6 @@
 {% import "@private/forms/search.html" as forms %}
 
+<nav-search inline-template>
 {{ searchForm({
 	id: 'nav-search',
 	redirect: '/results'
@@ -67,17 +68,7 @@
             <div class="col-sm-6">
                 <div class="form-group form-group--range">
                     <label>Price Range</label>
-                    <div class="input-slider-values clearfix">
-                        <div class="pull-left">
-                        	<span>$</span>
-                        	<span id="property-price-upper"></span>
-                        </div>
-                        <div class="pull-right">
-                        	<span>$</span>
-                        	<span id="property-price-lower"></span>
-                        </div>
-                    </div>
-                    <div id="property-price-range"></div>
+                    <slider v-on:changed="priceRangeChanged" :min="price.min" :max="price.max" prefix="$" step="1000"></slider>
 
                     {{ forms.numberBetween({
 						id: ['property_price_start', 'property_price_end'],
@@ -90,11 +81,8 @@
             <div class="col-sm-6">
                 <div class="form-group form-group--range">
                     <label>Area Size (sqft)</label>
-                    <div class="input-slider-values clearfix">
-                        <div class="pull-left" id="property-area-upper"></div>
-                        <div class="pull-right" id="property-area-lower"></div>
-                    </div>
-                    <div id="property-area-range"></div>
+
+                    <slider :min="footprint.min" :max="footprint.max"></slider>
 
                     {{ forms.numberBetween({
 						id: ['property_area_upper', 'property_area_lower'],
@@ -149,3 +137,4 @@
         </div>
     </div>
 {{ formClose() }}
+</nav-search>
