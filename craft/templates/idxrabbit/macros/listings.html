@@ -15,7 +15,7 @@
 				<br>
 			{% endif -%}
 
-			&nbsp;{{- listing.City -}},&nbsp;{{- listing.StateOrProvince -}} {{- listing.PostalCode -}}
+			&nbsp;{% if listing.City %}{{- listing.City -}},&nbsp;{% endif %}{{- listing.StateOrProvince -}}&nbsp;{{- listing.PostalCode -}}
 		</span>
 	{% endif %}
 {% endmacro %}
