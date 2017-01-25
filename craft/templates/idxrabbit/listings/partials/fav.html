@@ -1,0 +1,7 @@
+{% if hasSocial() %}
+    <listing-fav url="" listing-id="{{listing.ListingId}}" liked="{{likedListing(listing.ListingId)}}"></listing-fav>
+{% else %}
+    <div data-toggle="modal" data-target="#logInModal">
+        <i class="zmdi zmdi-sign-in"></i>
+    </div>
+{% endif %}
