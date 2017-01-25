@@ -22,6 +22,7 @@
     "laravel-elixir-webpack-official": "^1.0.10"
   },
   "dependencies": {
+    "accounting": "^0.4.1",
     "autosize": "^3.0.20",
     "bootstrap": "^3.3.7",
     "google-maps": "^3.2.1",
