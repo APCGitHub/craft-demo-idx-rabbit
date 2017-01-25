@@ -2,7 +2,7 @@
 	<div class="col-sm-8 listings-list">
 		{% if listings is defined and listings|length %}
 			{% for listing in listings %}
-				{% include "listings/partials/item_list.html" with {'listing': listing} only %}
+				{% include "listings/partials/item_list.html" %}
 			{% endfor %}
 		{% else %}
 			{% block emptyListings %}{% endblock %}

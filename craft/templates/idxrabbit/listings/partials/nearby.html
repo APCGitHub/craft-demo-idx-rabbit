@@ -8,6 +8,6 @@
 	{% set listings = results.data %}
 
 	{% for listing in listings %}
-		{% include "listings/partials/item_simple_list.html" with {'listing': listing} only %}
+		{% include "listings/partials/item_simple_list.html" %}
 	{% endfor %}
 </div>
