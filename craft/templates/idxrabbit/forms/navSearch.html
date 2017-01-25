@@ -81,7 +81,6 @@
             <div class="col-sm-6">
                 <div class="form-group form-group--range">
                     <label>Area Size (sqft)</label>
-
                     <slider :min="footprint.min" :max="footprint.max"></slider>
 
                     {{ forms.numberBetween({
@@ -96,17 +95,17 @@
                 <div class="form-group">
                     <label>Bedrooms</label>
                     <div class="btn-group btn-group-justified" data-toggle="buttons">
-                    	{% for i in 1..4 %}
-	                        <label class="btn">
-	                            <input type="checkbox" name="advanced-search-beds" id="bed{{i}}">{{- i -}}
+                    	{% for i in 1..5 %}
+	                        <label class="btn waves-effect">
+	                            <input type="radio" value="{{i}}" name="advanced-search-beds" id="bed{{i}}">{{- i -}}
 	                        </label>
                         {% endfor %}
                     </div>
 
-                    {{ forms.numberBetween({
-						id: ['property_bedrooms_total', 'property_bedrooms_total'],
+                    {{ forms.number({
+						id: 'property_bedrooms_total',
 						field: 'BedroomsTotal',
-						class: ['hidden', 'hidden']
+						class: 'hidden'
 					}) }}
                 </div>
             </div>
@@ -115,17 +114,17 @@
                 <div class="form-group">
                     <label>Bathrooms</label>
                     <div class="btn-group btn-group-justified" data-toggle="buttons">
-                    	{% for i in 1..4 %}
-	                        <label class="btn">
-	                            <input type="checkbox" name="advanced-search-baths" id="bath{{i}}">{{- i -}}
+                    	{% for i in 1..5 %}
+	                        <label class="btn waves-effect">
+	                            <input type="radio" value="{{i}}" name="advanced-search-baths" id="bath{{i}}">{{- i -}}
 	                        </label>
                         {% endfor %}
                     </div>
 
-                    {{ forms.numberBetween({
-						id: ['property_baths_full', 'property_baths_full'],
+                    {{ forms.number({
+						id: property_baths_full,
 						field: 'BathsFull',
-						class: ['hidden', 'hidden']
+						class: 'hidden'
 					}) }}
                 </div>
             </div>

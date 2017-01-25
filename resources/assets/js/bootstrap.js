@@ -17,6 +17,7 @@ Vue.http.interceptors.push((request, next) => {
     next();
 });
 
+/* Vue filters */
 let accounting = require('accounting');
 
 Vue.prototype.filters = {
@@ -45,9 +46,6 @@ require('slick-carousel');
 
 /* Lightgallery */
 require('lightgallery');
-
-/* nouislider */
-//window.noUiSlider = require('nouislider');
 
 /* Theme scripts */
 require('./scripts/bootstrap');

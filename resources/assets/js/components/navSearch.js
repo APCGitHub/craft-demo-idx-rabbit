@@ -12,7 +12,18 @@ Vue.component('navSearch', {
 		};
 	},
 	created() {
-		
+		$(document).ready(() => {
+			$('#nav-search').submit((e) => {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+
+				$('#property_bedrooms_total').val($('input[name="advanced-search-beds"]:checked').val());
+
+				$('#advanced-search-baths').val($('input[name="advanced-search-baths"]:checked').val());
+
+				$('#nav-search')[0].submit();
+			});
+		});
 	},
 	methods: {
 		priceRangeChanged(min, max) {
