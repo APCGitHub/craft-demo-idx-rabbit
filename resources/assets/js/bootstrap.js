@@ -8,10 +8,18 @@ let VueResource = require('vue-resource');
 Vue.use(VueResource);
 
 Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-CSRF-TOKEN', craft.csrfTokenValue);
+    request.headers.set('X-CSRF-TOKEN', Craft.csrfTokenValue);
+
+    let body = request.body;
+    body[Craft.csrfTokenName] = Craft.csrfTokenValue;
+    request.body = body;
+
+    // console.log(request.body);
 
     next();
 });
+
+Vue.http.options.emulateJSON = true;
 
 window.$bus = new Vue();
 
