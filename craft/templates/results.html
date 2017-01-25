@@ -12,32 +12,31 @@
 {% set page = craft.request.getParam('page') %}
 {% set orderBy = craft.request.getParam('orderBy') %}
 
-{% set query = craft.request.queryStringWithoutPath() %}
-
 {% block actionHeader %}
 	<div class="action-header">
-	    <div class="container">
-	        <div class="action-header__item action-header__item--search">
-	        	{{ craft.idxRabbit.render('forms/navActionSearch') }}
-	        </div>
+		<action-header inline-template>
+		    <div class="container">
+		    {{"{{query}}"}}
+		        <div class="action-header__item action-header__item--search">
+		        	{{ craft.idxRabbit.render('forms/navActionSearch') }}
+		        </div>
 
-	        <div class="action-header__item action-header__views hidden-xs">
-	            <a href="listings-grid.html" class="zmdi zmdi-apps {% if layout and layout == "grid" %}active{% endif %}"></a>
-	            <a href="listings-list.html" class="zmdi zmdi-view-list {% if layout is null or layout == "list" or layout is empty %}active{% endif %}"></a>
-	            <a href="listings-map.html" class="zmdi zmdi-map {% if layout and layout == "map" %}active{% endif %}"></a>
-	        </div>
+		        <div class="action-header__item action-header__views hidden-xs">
+		        	<a :href="href(layout)" v-for="layout in layouts" :class="['zmdi zmdi-' + layout.icon, {'active': layout.name === current_layout.name}]"></a>
+		        </div>
 
-	        <div class="action-header__item action-header__item--sort hidden-xs">
-	            <span class="action-header__small">Sort by :</span>
+		        <div class="action-header__item action-header__item--sort hidden-xs">
+		            <span class="action-header__small">Sort by :</span>
 
-	            <select class="select2">
-	                <option value="updated_at desc">Newest to oldest</option>
-	                <option value="updated_at asc">Oldest to Newest</option>
-	                <option value="ListPrice desc">Price hight to low</option>
-	                <option value="ListPrice asc">Price low to high</option>
-	            </select>
-	        </div>
-	    </div>
+		            <select class="select2">
+		                <option value="updated_at desc">Newest to oldest</option>
+		                <option value="updated_at asc">Oldest to Newest</option>
+		                <option value="ListPrice desc">Price hight to low</option>
+		                <option value="ListPrice asc">Price low to high</option>
+		            </select>
+		        </div>
+		    </div>
+	    </action-header>
 	</div>
 {% endblock %}
 
