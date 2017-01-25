@@ -10,7 +10,7 @@
 
 <script type="text/babel">
 	export default {
-		props: ['listingId', 'liked'],
+		props: ['listingId', 'liked', 'url'],
 		data() {
 			return {
 				did_like: this.liked,
@@ -23,6 +23,7 @@
 			favorite() {
 				let data = {
 					listing_id: this.listingId,
+					listing_url: this.url
 				};
 
 				this.http.faving = true;

@@ -1,7 +1,7 @@
 /* Inline template logics */
 require('./navSearch');
-require('./listings.show');
+require('./listings/listings.show');
 
 /* Vue components */
-Vue.component('listingMap', require('./ListingMap.vue'));
-Vue.component('listingFav', require('./ListingFav.vue'));
+Vue.component('listingMap', require('./listings/ListingMap.vue'));
+Vue.component('listingFav', require('./listings/ListingFav.vue'));
