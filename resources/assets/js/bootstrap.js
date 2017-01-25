@@ -1,3 +1,6 @@
+let GoogleMapsLoader = require('google-maps');
+GoogleMapsLoader.KEY = 'AIzaSyAB7qyMHJF18W65Gy3qzOHAtv44N5n-e2Y';
+
 /* jQuery */
 window.$ = window.jQuery = require('jquery');
 
