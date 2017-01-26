@@ -51,6 +51,22 @@
 							map: this.map.instance
 						});
 
+						let c = `<h3>${this.filters.money(l.ListPrice, '$', 0)}</h3>
+							<p></p>
+						`;
+
+						let info = new google.maps.InfoWindow({
+							content: c
+						});
+
+						google.maps.event.addListener(m, 'click', ((marker, info_window, index) => {
+							return () => {
+								info_window.open(this.map.instance);
+							};
+						})(m, info, i));
+
+						info.open(this.map.instance, m);
+
 						bounds.extend(m.getPosition());
 
 						this.map.markers.push(m);
