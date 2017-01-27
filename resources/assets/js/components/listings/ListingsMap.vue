@@ -5,6 +5,7 @@
 <script type="text/babel">
 	import GoogleMapsLoader from 'google-maps';
 	import ListingService from '../../services/ListingService';
+	import {default as swal} from 'sweetalert2';
 
 	export default {
 		props: ['listings'],
@@ -84,6 +85,16 @@
 
 						this.map.markers.push(m);
 					}
+				}
+
+				if(!this.map.markers.length) {
+					window.$bus.$on('loader.hidden', () => {
+						swal({
+							title: 'Hmm...',
+							text: 'None of the listings could be plotted.',
+							type: 'info'
+						});
+					});
 				}
 
 				this.map.instance.fitBounds(bounds);
