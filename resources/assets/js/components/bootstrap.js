@@ -2,6 +2,7 @@
 require('./navSearch');
 require('./listings/listings.show');
 require('./actionHeader');
+require('./sideSearch');
 
 /* Vue components */
 Vue.component('listingMap', require('./listings/ListingMap.vue'));
