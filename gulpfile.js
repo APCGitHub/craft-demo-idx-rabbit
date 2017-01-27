@@ -15,7 +15,9 @@ elixir((mix) => {
 			'./bower_components/rateYo/min/jquery.rateyo.min.css',
 			'./bower_components/Waves/dist/waves.min.css',
 			'./bower_components/lightgallery/dist/css/lightgallery.min.css',
-			'./bower_components/lightgallery/dist/css/lg-transitions.min.css'
+			'./bower_components/lightgallery/dist/css/lg-transitions.min.css',
+			'./bower_components/sweetalert/dist/sweetalert.css',
+			'./bower_components/sweetalert2/dist/sweetalert2.min.css'
 		], 'resources/assets/css/build/vendor.css')
 		.less('app.less', 'resources/assets/css/build/app.css')
 		.styles([
