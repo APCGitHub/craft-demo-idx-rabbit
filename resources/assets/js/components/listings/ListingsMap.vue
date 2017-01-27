@@ -4,6 +4,7 @@
 
 <script type="text/babel">
 	import GoogleMapsLoader from 'google-maps';
+	import ListingService from '../../services/ListingService';
 
 	export default {
 		props: ['listings'],
@@ -51,8 +52,22 @@
 							map: this.map.instance
 						});
 
-						let c = `<h3>${this.filters.money(l.ListPrice, '$', 0)}</h3>
-							<p></p>
+						let c = `<h4>${this.filters.money(l.ListPrice, '$', 0)}</h4>
+							<p>${ListingService.address(l)}</p>
+							<ul class="listings-grid__attrs">
+								<li>
+									<i class="listings-grid__icon listings-grid__icon--bed"></i>&nbsp;${l.BedroomsTotal || 0}
+								</li>
+								<li>
+									<i class="listings-grid__icon listings-grid__icon--bath"></i>&nbsp;${l.BathroomsFull || 0}
+								</li>
+								<li>
+									<i class="listings-grid__icon listings-grid__icon--parking"></i>&nbsp;${l.GarageSpaces || 0}
+								</li>
+							</ul>
+							<div class="text-center m-b-5">
+								<a href="/listings/${l.ListingId}" class="btn btn-info waves-effect">Details</a>
+							</div>
 						`;
 
 						let info = new google.maps.InfoWindow({
@@ -61,11 +76,9 @@
 
 						google.maps.event.addListener(m, 'click', ((marker, info_window, index) => {
 							return () => {
-								info_window.open(this.map.instance);
+								info_window.open(this.map.instance, marker);
 							};
 						})(m, info, i));
-
-						info.open(this.map.instance, m);
 
 						bounds.extend(m.getPosition());
 
