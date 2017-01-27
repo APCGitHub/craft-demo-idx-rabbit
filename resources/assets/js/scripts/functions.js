@@ -367,5 +367,7 @@ window.onload = () => {
 
     setTimeout(() => {
         fade(document.getElementById('page-loader'));
+
+        window.$bus.$emit('loader.hidden');
     }, 200);
 };
