@@ -35,6 +35,8 @@
     "Clamp.js": "josephschmitt/Clamp.js",
     "trumbowyg": "Alex-D/Trumbowyg#^2.1.1",
     "jquery-placeholder": "^2.3.1",
-    "font-awesome": "fontawesome#^4.7.0"
+    "font-awesome": "fontawesome#^4.7.0",
+    "sweetalert2": "^6.3.2",
+    "sweetalert": "^1.1.3"
   }
 }
