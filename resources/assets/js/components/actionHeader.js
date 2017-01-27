@@ -1,7 +1,7 @@
 import URI from 'urijs';
 
 Vue.component('actionHeader', {
-	props: [],
+	props: ['default'],
 	data() {
 		return {
 			current_layout: null,
@@ -34,15 +34,23 @@ Vue.component('actionHeader', {
 			if(this.current_layout.length) {
 				this.current_layout = this.current_layout[0];
 			}
+		} else {
+			if(this.default) {
+				this.current_layout = this.layouts.filter((l) => {
+					return l.name === this.default;
+				});
+
+				if(this.current_layout.length)
+					this.current_layout = this.current_layout[0];
+			} else {
+				this.current_layout = this.layouts[1];
+			}
 		}
-	},
-	mounted() {
-		
 	},
 	methods: {
 		href(layout) {
 			let q = this.uri.search(true);
-			q['layout'] = layout.name
+			q['layout'] = layout.name;
 
 			return new URI(this.uri).search(q).toString();
 		}
