@@ -30,97 +30,98 @@
 
                 <div class="form-group form-group--range">
                     <label>Price Range</label>
-                    <slider :min="price.min" :max="price.max" prefix="$"></slider>
+                    <slider v-on:changed="priceChanged" :min="price.min" :max="price.max" step="1000" prefix="$"></slider>
+
+                    {{ forms.numberBetween({
+                        id: ['property_price_start', 'property_price_end'],
+                        field: 'ListPrice',
+                        class: ['hidden', 'hidden']
+                    }) }}
                 </div>
 
                 <div class="form-group form-group--range">
                     <label>Area Size (sqft)</label>
-                    <div class="input-slider-values clearfix">
-                        <div class="pull-left" id="property-area-upper"></div>
-                        <div class="pull-right" id="property-area-lower"></div>
-                    </div>
-                    <div id="property-area-range"></div>
+                    <slider v-on:changed="footprintChanged" :min="footprint.min" :max="footprint.max"></slider>
+
+                    {{ forms.numberBetween({
+                        id: ['property_area_upper', 'property_area_lower'],
+                        field: 'BuildingAreaTotal',
+                        class: ['hidden', 'hidden']
+                    }) }}
                 </div>
 
                 <div class="form-group">
                     <label>Bedrooms</label>
                     <div class="btn-group btn-group-justified" data-toggle="buttons">
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-beds" id="bed1">1
-                        </label>
-                        <label class="btn active">
-                            <input type="checkbox" name="inner-search-beds" id="bed2" checked>2
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-beds" id="bed3">3
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-beds" id="bed4">4
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-beds" id="bed5">4+
-                        </label>
+                        {% for i in 1..5 %}
+                            <label class="btn waves-effect">
+                                <input type="radio" value="{{i}}" name="advanced-search-beds" id="bed{{i}}">{{- i -}}
+                            </label>
+                        {% endfor %}
                     </div>
+
+                    {{ forms.number({
+                        id: 'property_bedrooms_total',
+                        field: 'BedroomsTotal',
+                        class: 'hidden'
+                    }) }}
                 </div>
 
                 <div class="form-group">
                     <label>Bathrooms</label>
                     <div class="btn-group btn-group-justified" data-toggle="buttons">
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-baths" id="bath1">1
-                        </label>
-                        <label class="btn active">
-                            <input type="checkbox" name="inner-search-baths" id="bath2" checked>2
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-baths" id="bath3">3
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-baths" id="bath4">4
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-baths" id="bath5">4+
-                        </label>
+                        {% for i in 1..5 %}
+                            <label class="btn waves-effect">
+                                <input type="radio" value="{{i}}" name="advanced-search-baths" id="bath{{i}}">{{- i -}}
+                            </label>
+                        {% endfor %}
                     </div>
+
+                    {{ forms.number({
+                        id: 'property_baths_full',
+                        field: 'BathsFull',
+                        class: 'hidden'
+                    }) }}
                 </div>
 
                 <div class="form-group">
-                    <label>Garages</label>
+                    <label>Garage Spaces</label>
+
                     <div class="btn-group btn-group-justified" data-toggle="buttons">
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-garage" id="garage1">1
-                        </label>
-                        <label class="btn active">
-                            <input type="checkbox" name="inner-search-garage" id="garage2" checked>2
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-garage" id="garage3">3
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-garage" id="garage4">4
-                        </label>
-                        <label class="btn">
-                            <input type="checkbox" name="inner-search-garage" id="garage5">4+
-                        </label>
+                        {% for i in 1..5 %}
+                            <label class="btn waves-effect">
+                                <input type="radio" value="{{i}}" name="advanced-search-garage" id="garage{{i}}">{{- i -}}
+                            </label>
+                        {% endfor %}
                     </div>
+
+                    {{ forms.number({
+                        id: 'property_garage_spaces',
+                        field: 'GarageSpaces',
+                        class: 'hidden'
+                    }) }}
                 </div>
 
                 <div class="form-group form-group--range">
                     <label>Lot Size (sqft)</label>
-                    <div class="input-slider-values clearfix">
-                        <div class="pull-left" id="property-lot-upper"></div>
-                        <div class="pull-right" id="property-lot-lower"></div>
-                    </div>
-                    <div id="property-lot-range"></div>
+                    <slider v-on:changed="lotChanged" :min="lot.min" :max="lot.max" step="50"></slider>
+
+                    {{ forms.numberBetween({
+                        id: ['property_lot_upper', 'property_lot_lower'],
+                        field: 'LotSizeSquareFeet',
+                        class: ['hidden', 'hidden']
+                    }) }}
                 </div>
 
                 <div class="form-group form-group--range">
                     <label>Year Built</label>
-                    <div class="input-slider-values clearfix">
-                        <div class="pull-left" id="property-yb-upper"></div>
-                        <div class="pull-right" id="property-yb-lower"></div>
-                    </div>
-                    <div id="property-year-built"></div>
+                    {% set this_year = "now"|date("Y") %}
+
+                    <select class="select2">
+                        {% for year in 1800..this_year %}
+                            <option value="{{year}}" {% if year == (this_year-20) %}selected{% endif %}>{{year}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
