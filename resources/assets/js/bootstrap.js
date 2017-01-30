@@ -20,6 +20,8 @@ Vue.http.interceptors.push((request, next) => {
     next();
 });
 
+Vue.http.options.emulateJSON = true;
+
 /* Vue filters */
 let accounting = require('accounting');
 
@@ -30,8 +32,6 @@ Vue.prototype.filters = {
 		return accounting.formatMoney(value, symbol, decimals, dec_symb, thous_symb);
 	}
 };
-
-Vue.http.options.emulateJSON = true;
 
 window.$bus = new Vue();
 
