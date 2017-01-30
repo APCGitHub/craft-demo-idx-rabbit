@@ -3,6 +3,7 @@ require('./navSearch');
 require('./listings/listings.show');
 require('./actionHeader');
 require('./sideSearch');
+require('./listings/lead.form');
 
 /* Vue components */
 Vue.component('listingMap', require('./listings/ListingMap.vue'));

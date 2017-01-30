@@ -11,50 +11,58 @@
     {% set email = agentProspect.email %}
 {% endif %}
 
-{{ leadForm({
-    id: 'lead-form',
-    class: 'card hidden-print',
-    listingId: listing.ListingId,
-    listingKey: listing.ListingKey,
-    listingUrl: listingUrl is defined ? listingUrl : ''
-}) }}
-    <div class="card__header">
-        <h2>Inquire this Proeprty</h2>
-        <small>Call us now or send us your information</small>
-    </div>
-
-    <div class="card__body">
-        <div class="inquire__number">
-            <i class="zmdi zmdi-phone"></i>
-            +1-541-754-3010
+<lead-form inline-template>
+    {{ leadForm({
+        id: 'lead-form',
+        class: 'card hidden-print',
+        listingId: listing.ListingId,
+        listingKey: listing.ListingKey,
+        listingUrl: listingUrl is defined ? listingUrl : ''
+    }) }}
+        <div class="card__header">
+            <h2>Inquire about this Property</h2>
+            <small>Call us now or send us your information</small>
         </div>
 
-        <div class="form-group form-group--float">
-            <input type="text" value="{{name}}" name="name" class="form-control">
-            <label>Name</label>
-            <i class="form-group__bar"></i>
-        </div>
-        <div class="form-group form-group--float">
-            <input type="email" value="{{email}}" name="email" class="form-control">
-            <label>Email Address</label>
-            <i class="form-group__bar"></i>
-        </div>
-        <div class="form-group form-group--float">
-            <input type="text" name="phone" class="form-control">
-            <label>Contact Number</label>
-            <i class="form-group__bar"></i>
-        </div>
-        <div class="form-group form-group--float">
-            <textarea name="message" class="form-control textarea-autoheight">Hi there, I am interested in {{ listingMacros.address(listing) }}</textarea>
-            <label>Message</label>
-            <i class="form-group__bar"></i>
+        <div class="card__body">
+            <div class="inquire__number">
+                <i class="zmdi zmdi-phone"></i>
+                <a href="tel:+1-541-754-3010">+1-541-754-3010</a>
+            </div>
+
+            <div class="form-group form-group--float">
+                <input type="text" value="{{name}}" name="name" class="form-control">
+                <label>Name</label>
+                <i class="form-group__bar"></i>
+            </div>
+            <div class="form-group form-group--float">
+                <input type="email" value="{{email}}" name="email" class="form-control">
+                <label>Email Address</label>
+                <i class="form-group__bar"></i>
+            </div>
+            <div class="form-group form-group--float">
+                <input type="text" name="phone" class="form-control">
+                <label>Contact Number</label>
+                <i class="form-group__bar"></i>
+            </div>
+            <div class="form-group form-group--float">
+                <textarea name="message" class="form-control textarea-autoheight">Hi there, I am interested in {{ listingMacros.address(listing) }}</textarea>
+                <label>Message</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <small class="text-muted">By sending us your information, you agree to Roost’s Terms of Use &amp; Privacy Policy.</small>
         </div>
 
-        <small class="text-muted">By sending us your information, you agree to Roost’s Terms of Use &amp; Privacy Policy.</small>
-    </div>
-
-    <div class="card__footer">
-        <button type="submit" class="btn btn-primary waves-effect">Request Information</button>
-        <button class="btn btn-link hidden-lg hidden-md waves-effect" data-rmd-action="block-close" data-rmd-target="#inquire">Cancel</button>
-    </div>
-{{ formClose() }}
+        <div class="card__footer">
+            <template v-if="!http.lead.sending">
+                <button type="button" v-if="http.lead.success" class="btn btn-success">
+                    <i class="zmdi zmdi-check"></i>&nbsp;Success
+                </button>
+                <button v-else type="submit" class="btn btn-primary waves-effect">Request Information</button>
+            </template>
+            <button v-else type="button" class="btn btn-primary" disabled><i class="zmdi zmdi-spinner zmdi-hc-spin"></i>&nbsp;&nbsp;Submitting</button>
+            <button class="btn btn-link hidden-lg hidden-md waves-effect" data-rmd-action="block-close" data-rmd-target="#inquire">Cancel</button>
+        </div>
+    {{ formClose() }}
+</lead-form>
