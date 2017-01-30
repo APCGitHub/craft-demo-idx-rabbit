@@ -1,13 +1,15 @@
-<side-search inline-template>
-    <aside id="advanced-search" class="rmd-sidebar">
+{% import "@private/forms/search.html" as forms %}
+
+<side-search id="advanced-side-search" inline-template>
+    <aside class="rmd-sidebar">
         {{ searchForm({
-            id: 'nav-search',
+            id: 'advanced-side-search-form',
             class: 'card',
             redirect: '/results'
         }) }}
             <div class="card__header">
                 <h2>Advanced Property Search</h2>
-
+                {#
                 <div class="dropdown m-t-5">
                     <a data-toggle="dropdown" href="" class="text-muted">08 Saved Searches<i class="caret"></i></a>
 
@@ -19,12 +21,22 @@
                         <li><a href=""><i class="zmdi zmdi-time"></i>14/07/2014 at 05:43 AM</a></li>
                     </ul>
                 </div>
+                #}
             </div>
 
             <div class="card__body m-t-20">
                 <div class="form-group form-group--float">
-                    <input type="text" class="form-control" value="New York, NY">
-                    <label class="fg-float">Location</label>
+                     {{ forms.multiFieldText({
+                        type: 'contains',
+                        id: 'wildcard_search',
+                        fields: ['City', 'StateOrProvince', 'PostalCode', 'StreetName'],
+                        class: 'form-control',
+                        placeholder: 'Enter any Neighorhood, State, City, Zip Code',
+                        attrs: [{
+                            name: 'data-rmd-action',
+                            value: 'advanced-search-open'
+                        }]
+                    }) }}
                     <i class="form-group__bar"></i>
                 </div>
 
@@ -117,18 +129,25 @@
                     <label>Year Built</label>
                     {% set this_year = "now"|date("Y") %}
 
-                    <select class="select2">
+                    <select class="select2" id="property-year-built">
                         {% for year in 1800..this_year %}
-                            <option value="{{year}}" {% if year == (this_year-20) %}selected{% endif %}>{{year}}</option>
+                            <option value="{{year}}" {% if year == (this_year-20) %}selected{% endif %}>{{year}}+</option>
                         {% endfor %}
                     </select>
+
+                    {{ forms.number({
+                        id: 'property_year_built',
+                        field: 'YearBuilt',
+                        type: 'ge',
+                        class: 'hidden'
+                    }) }}
                 </div>
             </div>
 
             <div class="card__footer">
                 <button class="btn btn-sm btn-primary">Search</button>
-                <a href="" class="btn btn-link" data-rmd-action="block-close" data-rmd-target="#advanced-search">Save</a>
-                <a href="" class="btn btn-link" data-rmd-action="block-close" data-rmd-target="#advanced-search">Cancel</a>
+                {#<a href="" class="btn btn-link" data-rmd-action="block-close" data-rmd-target="#advanced-side-search">Save</a>#}
+                <button type="button" class="btn btn-link waves-effect" data-rmd-action="block-close" data-rmd-target="#advanced-side-search">Cancel</button>
             </div>
         {{ formClose() }}
     </aside>
