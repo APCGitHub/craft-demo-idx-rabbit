@@ -3,6 +3,10 @@
 {% block title %}Main {{parent()}} {% endblock %}
 
 {% block content %}
+	<header class="section__title">
+		<h2>Top Listings</h2>
+		<small>Browse our large selection of beautiful homes.</small>
+	</header>
 	{{ craft.idxRabbit.render('listings/full_width_grid.html', {
 		where: 'ListPrice ge 0',
 		limit: 12,
