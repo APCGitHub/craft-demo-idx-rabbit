@@ -105,6 +105,8 @@
 				{{ noListingsBlock }}
 			{% endblock %}
 		{% endembed %}
+
+		<load-more></load-more>
 	{% elseif layout == 'map' %}
 		{% if results['errors'] is defined and results.errors %}
 			{% for error in results.errors %}
