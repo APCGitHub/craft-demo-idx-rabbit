@@ -8,7 +8,13 @@
 	import {default as swal} from 'sweetalert2';
 
 	export default {
-		props: ['listings'],
+		props: {
+			listings: Array,
+			showWarning: {
+				type: Boolean,
+				default: true
+			}
+		},
 		data() {
 			return {
 				map: {
@@ -88,13 +94,15 @@
 				}
 
 				if(!this.map.markers.length) {
-					window.$bus.$on('loader.hidden', () => {
-						swal({
-							title: 'Hmm...',
-							text: 'None of the listings could be plotted.',
-							type: 'info'
+					if(this.showWarning){
+						window.$bus.$on('loader.hidden', () => {
+							swal({
+								title: 'Hmm...',
+								text: 'None of the listings could be plotted.',
+								type: 'info'
+							});
 						});
-					});
+					}
 				}
 
 				this.map.instance.fitBounds(bounds);
@@ -105,6 +113,10 @@
 
 <style scoped>
 	#listings-map {
-		height: 600px;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
 	}
 </style>
