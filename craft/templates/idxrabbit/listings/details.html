@@ -211,9 +211,18 @@
                         </div>
 
                         {# modify this to do a geospatial radial search #}
+
+                        {% set filter = 'BathroomsFull gt 0 and BedroomsTotal gt 0' %}
+
+                        {% if listing.Latitude and listing.Longitude %}
+                            {% set filter = filter ~ " and geo.distance(location, POINT(#{listing.Longitude} #{listing.Latitude})) lt 0.04" %}
+                        {% else %}
+                            {# Center ish of Columbus #}
+                            {% set filter = filter ~ ' and geo.distance(location, POINT(-83.001565 40.022384)) lt 0.04' %}
+                        {% endif %}
                         
                         {% include "listings/partials/nearby.html" with {
-                            where: 'BathroomsFull gt 0 and BedroomsTotal gt 0',
+                            where: filter,
                             orderBy: 'ListPrice desc',
                             limit: 5
                         } only %}
