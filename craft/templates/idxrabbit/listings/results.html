@@ -52,9 +52,10 @@
 			            <small>You may also be interested in these listings</small>
 			        </div>
 
-			        <div class="map-widget">
-			            <div id="nearby-properties" class="map-widget__item"></div>
-			        </div>
+			        {% include "listings/partials/nearby.html" with {
+			        	useMap: true,
+			        	where: 'Latitude ne 0 and Longitude ne 0'
+			        } %}
 			    </div>
 
 			    <div class="card">
@@ -165,7 +166,7 @@
 	{% endif %}
 
 	<div class="card">
-		<div class="card__body">
+		<div class="card__body" style="postion: relative; height: 600px">
 			<listings-map :listings="{{ listings | json_encode }}"></listings-map>
 		</div>
 	</div>
