@@ -1,3 +1,5 @@
+{% import "macros/errors.html" as Errors %}
+
 {% set layoutClass = 'list' %}
 {% set allowedLayouts = ['list', 'grid', 'map'] %}
 
@@ -10,173 +12,131 @@
 		'$top': 12,
 		'$orderby': 'ListPrice desc'
 	}) %}
-{% endif %}
 
-{% set listings = [] %}
+	{% set listings = [] %}
 
-{% set noListingsBlock %}
-	<div class="card">
-		<div class="card__header">
-			<h1>No results</h1>
-			<small>Try adjusting your search parameters for more results.</small>
+	{% set noListingsBlock %}
+		<div class="card">
+			<div class="card__header">
+				<h1>No results</h1>
+				<small>Try adjusting your search parameters for more results.</small>
+			</div>
 		</div>
-	</div>
-{% endset %}
+	{% endset %}
 
-{##
-# Should look into a common error block that we can reuse to keep things DRY
-#}
+	{##
+	# Should look into a common error block that we can reuse to keep things DRY
+	#}
 
-{% if layoutClass == 'list' %}
-	{% if results['errors'] is defined and results.errors %}
-		{% for error in results.errors %}
-			{% if error['message'] is defined %}
-				<div class="alert alert-danger">{{error.message}}</div>
-			{% else %}
-				<div class="alert alert-danger">An error occurred</div>
-			{% endif %}
-		{% endfor %}
-	{% else %}
-		{% set listings = results.data %}
+	{% if layoutClass == 'list' %}
+		{% if results['data'] is defined  %}
+			{% set listings = results.data %}
+		{% else %}
+			{{ Errors.api(results) }}
+		{% endif %}
+
+		{% embed "listings/partials/list.html" with {'listings': listings} %}
+			{% block emptyListings %}
+				{{ noListingsBlock }}
+			{% endblock %}
+			{% block aside %}
+				<aside class="col-sm-4 hidden-xs">
+				    <div class="card">
+				        <div class="card__header">
+				            <h2>Properties near your location</h2>
+				            <small>You may also be interested in these listings</small>
+				        </div>
+
+				        {% include "listings/partials/nearby.html" with {
+				        	useMap: true,
+				        	where: 'Latitude ne 0 and Longitude ne 0'
+				        } %}
+				    </div>
+
+				    <div class="card">
+				        <div class="card__header">
+				            <h2>Talk to an Agent</h2>
+				            <small>Nullam dolorid nibh ultricies vehicula elit</small>
+				        </div>
+				        <div class="list-group">
+				            {% include "agents/partials/agent_simple_list.html" %}
+
+				            <a href="" class="view-more">View all Agents</a>
+				        </div>
+				    </div>
+
+				    <div class="card subscribe mdc-bg-light-blue">
+				        <div class="subscribe__icon">
+				            <i class="zmdi zmdi-email"></i>
+				        </div>
+
+				        <h2>Subscribe for Newsletters</h2>
+				        <small>Curabitur blandit tempus porttitor adipiscing maecenas faucibus mollis interdum</small>
+
+				        <form>
+				            <div class="form-group form-group--light form-group--float">
+				                <input type="text" class="form-control text-center" placeholder="Email Address">
+				                <i class="form-group__bar"></i>
+				            </div>
+
+				            <button class="btn btn--circle">
+				                <i class="zmdi zmdi-check mdc-text-light-blue"></i>
+				            </button>
+				        </form>
+				    </div>
+				</aside>
+			{% endblock %}
+		{% endembed %}
+	{% elseif layout == 'grid' %}
+		{% if results['errors'] is defined and results.errors %}
+			{% for error in results.errors %}
+				{% if error['message'] is defined %}
+					<div class="alert alert-danger">{{error.message}}</div>
+				{% else %}
+					<div class="alert alert-danger">An error occurred</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			{% set listings = results.data %}
+		{% endif %}
+
+		{% embed "listings/partials/grid.html" with {'listings': listings} %}
+			{% block emptyListings %}
+				{{ noListingsBlock }}
+			{% endblock %}
+		{% endembed %}
+	{% elseif layout == 'map' %}
+		{% if results['errors'] is defined and results.errors %}
+			{% for error in results.errors %}
+				{% if error['message'] is defined %}
+					<div class="alert alert-danger">{{error.message}}</div>
+				{% else %}
+					<div class="alert alert-danger">An error occurred</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			{% set listings = results.data %}
+		{% endif %}
+
+		<div class="card">
+			<div class="card__body" style="postion: relative; height: 600px">
+				<listings-map :listings="{{ listings | json_encode }}"></listings-map>
+			</div>
+		</div>
 	{% endif %}
 
-	{% embed "listings/partials/list.html" with {'listings': listings} %}
-		{% block emptyListings %}
-			{{ noListingsBlock }}
-		{% endblock %}
-		{% block aside %}
-			<aside class="col-sm-4 hidden-xs">
-			    <div class="card">
-			        <div class="card__header">
-			            <h2>Properties near your location</h2>
-			            <small>You may also be interested in these listings</small>
-			        </div>
+	{% include "forms/sideSearch.html" %}
 
-			        {% include "listings/partials/nearby.html" with {
-			        	useMap: true,
-			        	where: 'Latitude ne 0 and Longitude ne 0'
-			        } %}
-			    </div>
+	<!-- Advanced Listing Search -->
+	<button class="btn btn--action btn--circle" data-rmd-action="block-open" data-rmd-target="#advanced-side-search">
+	    <i class="zmdi zmdi-search-for"></i>
+	</button>
 
-			    <div class="card">
-			        <div class="card__header">
-			            <h2>Talk to an Agent</h2>
-			            <small>Nullam dolorid nibh ultricies vehicula elit</small>
-			        </div>
-			        <div class="list-group">
-			            <a class="list-group-item media" href="">
-			                <div class="pull-left">
-			                    <img src="https://placeholdit.imgix.net/~text?&w=500&h=500" alt="" class="list-group__img img-circle" width="65" height="65">
-			                </div>
-			                <div class="media-body list-group__text">
-			                    <strong>Sarah Zelermyer Diaz</strong>
-			                    <small class="list-group__text">+1-202-555-0121</small>
-			                    <div class="rmd-rate" data-rate-value="5" data-rate-readonly="true"></div>
-			                </div>
-			            </a>
-
-			            <a class="list-group-item media" href="">
-			                <div class="pull-left">
-			                    <img src="https://placeholdit.imgix.net/~text?&w=500&h=500" alt="" class="list-group__img img-circle" width="65" height="65">
-			                </div>
-			                <div class="media-body list-group__text">
-			                    <strong>Malinda Hollaway</strong>
-			                    <small class="list-group__text">+1-202-555-0188</small>
-			                    <div class="rmd-rate" data-rate-value="5" data-rate-readonly="true"></div>
-			                </div>
-			            </a>
-
-			            <a class="list-group-item media" href="">
-			                <div class="pull-left">
-			                    <img src="https://placeholdit.imgix.net/~text?&w=500&h=500" alt="" class="list-group__img img-circle" width="65" height="65">
-			                </div>
-			                <div class="media-body list-group__text">
-			                        <strong>Dave Williams Jr.</strong>
-			                    <small class="list-group__text">+1-202-555-0132</small>
-			                    <div class="rmd-rate" data-rate-value="5" data-rate-readonly="true"></div>
-			                </div>
-			            </a>
-
-			            <a class="list-group-item media" href="">
-			                <div class="pull-left">
-			                    <img src="https://placeholdit.imgix.net/~text?&w=500&h=500" alt="" class="list-group__img img-circle" width="65" height="65">
-			                </div>
-			                <div class="media-body list-group__text">
-			                    <strong>Stephen Franklin</strong>
-			                    <small class="list-group__text">+1-202-555-0141</small>
-			                    <div class="rmd-rate" data-rate-value="5" data-rate-readonly="true"></div>
-			                </div>
-			            </a>
-
-			            <a href="" class="view-more">View all Agents</a>
-			        </div>
-			    </div>
-
-			    <div class="card subscribe mdc-bg-light-blue">
-			        <div class="subscribe__icon">
-			            <i class="zmdi zmdi-email"></i>
-			        </div>
-
-			        <h2>Subscribe for Newsletters</h2>
-			        <small>Curabitur blandit tempus porttitor adipiscing maecenas faucibus mollis interdum</small>
-
-			        <form>
-			            <div class="form-group form-group--light form-group--float">
-			                <input type="text" class="form-control text-center" placeholder="Email Address">
-			                <i class="form-group__bar"></i>
-			            </div>
-
-			            <button class="btn btn--circle">
-			                <i class="zmdi zmdi-check mdc-text-light-blue"></i>
-			            </button>
-			        </form>
-			    </div>
-			</aside>
-		{% endblock %}
-	{% endembed %}
-{% elseif layout == 'grid' %}
-	{% if results['errors'] is defined and results.errors %}
-		{% for error in results.errors %}
-			{% if error['message'] is defined %}
-				<div class="alert alert-danger">{{error.message}}</div>
-			{% else %}
-				<div class="alert alert-danger">An error occurred</div>
-			{% endif %}
-		{% endfor %}
-	{% else %}
-		{% set listings = results.data %}
-	{% endif %}
-
-	{% embed "listings/partials/grid.html" with {'listings': listings} %}
-		{% block emptyListings %}
-			{{ noListingsBlock }}
-		{% endblock %}
-	{% endembed %}
-{% elseif layout == 'map' %}
-	{% if results['errors'] is defined and results.errors %}
-		{% for error in results.errors %}
-			{% if error['message'] is defined %}
-				<div class="alert alert-danger">{{error.message}}</div>
-			{% else %}
-				<div class="alert alert-danger">An error occurred</div>
-			{% endif %}
-		{% endfor %}
-	{% else %}
-		{% set listings = results.data %}
-	{% endif %}
-
-	<div class="card">
-		<div class="card__body" style="postion: relative; height: 600px">
-			<listings-map :listings="{{ listings | json_encode }}"></listings-map>
+	{% include "modals/socialLogin.html" %}
+{% else %}
+	<div class="row">
+		<div class="col-sm-12 col-md-8 col-md-offset-2">
+			{{ Errors.general("Invalid search, please try again.") }}
 		</div>
 	</div>
 {% endif %}
-
-{% include "forms/sideSearch.html" %}
-
-<!-- Advanced Listing Search -->
-<button class="btn btn--action btn--circle" data-rmd-action="block-open" data-rmd-target="#advanced-side-search">
-    <i class="zmdi zmdi-search-for"></i>
-</button>
-
-{% include "modals/socialLogin.html" %}
