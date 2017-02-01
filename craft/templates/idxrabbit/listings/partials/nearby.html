@@ -1,13 +1,30 @@
 {% set results = listings({
 	'$filter': (where is defined) ? where : '', 
 	'$top': (limit is defined) ? limit : 10,
-	'$orderby': (orderBy is defined) ? orderBy : ''
+	'$orderby': (orderBy is defined) ? orderBy : '',
 }) %}
 
-<div class="list-group">
+{% cache 'nearby' 3600 %}
+
+{% if results['errors'] is defined %}
+	{% for error in results.errors %}
+		<p>{{error.message}}</p>
+	{% endfor %}
+{% else %}
 	{% set listings = results.data %}
 
-	{% for listing in listings %}
-		{% include "listings/partials/item_simple_list.html" %}
-	{% endfor %}
-</div>
+	{% if useMap is defined and useMap %}
+		<div class="map-widget">
+	        <div class="map-nearby-properties map-widget__item">
+	        	<listings-map :listings="{{ listings | json_encode }}" :show-warning="false"></listings-map>
+	        </div>
+	    </div>
+	{% else %}
+		<div class="list-group">
+			{% for listing in listings %}
+				{% include "listings/partials/item_simple_list.html" %}
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endif %}
+{% endcache %}
