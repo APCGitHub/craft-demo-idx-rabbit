@@ -8,7 +8,9 @@ Waves.init();
 
 const WOW = require('wow.js');
 let wow = new WOW();
-wow.init();
+wow.init({
+    live: false
+});
 
 
 
