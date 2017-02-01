@@ -1,3 +1,5 @@
+{% import "macros/errors.html" as Errors %}
+
 {% set results = listings({
 	'$filter': (where is defined) ? where : '', 
 	'$top': (limit is defined) ? limit : 100,
@@ -5,20 +7,7 @@
 	'$orderby': (orderBy is defined) ? orderBy : ''
 }) %}
 
-{% if results['errors'] is defined and results.errors %}
-	<div class="card">
-		<div class="card__header">
-			<h1>Uh oh</h1>
-			{% for error in results.errors %}
-				{% if error['message'] is defined %}
-					<small>{{error.message}}</small>
-				{% else %}
-					<small>An error occurred</small>
-				{% endif %}
-			{% endfor %}
-		</div>
-	</div>
-{% else %}
+{% if results['data'] is defined %}
 	{% set listings = results.data %}
 	
 	{% embed "listings/partials/grid.html" with {'listings': listings} only %}
@@ -30,6 +19,8 @@
 			</div>
 		{% endblock %}
 	{% endembed %}
+{% else %}
+	{{ Errors.api(results) }}
 {% endif %}
 
 {% include "modals/socialLogin.html" %}
