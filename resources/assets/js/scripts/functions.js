@@ -2,8 +2,15 @@
 const Waves = require('node-waves');
 const autosize = require('autosize');
 
+//Init waves effect
 Waves.attach('.waves-effect');
 Waves.init();
+
+const WOW = require('wow.js');
+let wow = new WOW();
+wow.init();
+
+
 
 $(document).ready(function () {
     /*------------------------------
