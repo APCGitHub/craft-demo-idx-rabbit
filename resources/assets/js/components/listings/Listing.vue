@@ -86,10 +86,6 @@
 
 	export default {
 		props: {
-			liked: {
-				type: Boolean,
-				default: false
-			},
 			hasSocial: {
 				type: Boolean,
 				default: false
@@ -106,7 +102,21 @@
 			}
 		},
 		data() {
-			return {};
+			return {
+				liked: false
+			};
+		},
+		created() {
+			let url = `/actions/idxRabbit/listings/likedAjax?listing_id=${this.listing.ListingId}`;
+
+			this.$http.get(url).then(res => {
+				let body = res.body;
+				
+				this.liked = body.liked;
+			}).catch(err => {
+				let body = err.body;
+				console.log(body);
+			});
 		},
 		computed: {
 			fullAddress() {

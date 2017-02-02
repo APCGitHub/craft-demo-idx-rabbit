@@ -19,6 +19,11 @@
 				}
 			};
 		},
+		watch: {
+			liked(value) {
+				this.did_like = value;
+			}
+		},
 		methods: {
 			favorite() {
 				let data = {
@@ -29,10 +34,11 @@
 				this.http.faving = true;
 
 				this.$http.post('/actions/idxRabbit/prospects/favoriteListingAjax', data).then(res => {
-					this.http.faving = true;
+					this.http.faving = false;
 					this.did_like = true;
 				}).catch(err => {
-					this.http.faving = true;
+					this.http.faving = false;
+					this.did_like = false;
 				});
 			}
 		}

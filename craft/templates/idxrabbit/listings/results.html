@@ -41,7 +41,7 @@
 
 					{% block vueTemplates %}
 						<template v-for="listing in listings">
-							<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="list" :listing="listing" :liked="{{likedListing(listing.ListingId) ? 'true' : 'false'}}"></listing>
+							<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="list" :listing="listing"></listing>
 						</template>
 					{% endblock %}
 
@@ -104,7 +104,7 @@
 					{% block vueTemplates %}
 						<template v-for="(listing, index) in listings">
 							<div class="col-sm-6 col-md-3">
-								<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="grid" :listing="listing" :liked="{{likedListing(listing.ListingId) ? 'true' : 'false'}}"></listing>
+								<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="grid" :listing="listing"></listing>
 							</div>
 							{# Clear fixes #}
 							<div v-if="(index+1) > 1 && (index+1) % 4 == 0" class="clearfix visible-md visible-lg"></div>
