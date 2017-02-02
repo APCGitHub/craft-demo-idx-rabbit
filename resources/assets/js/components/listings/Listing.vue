@@ -69,10 +69,10 @@
 	    </a>
 
 	    <div class="actions listings-grid__favorite">
-	        <template v-show="hasSocial">
+	        <template v-if="hasSocial">
 			    <listing-fav :url="url" :listing-id="listing.ListingId" :liked="liked"></listing-fav>
 			</template>
-			<template v-show="!hasSocial">
+			<template v-else>
 			    <div data-toggle="modal" data-target="#logInModal">
 			        <i class="zmdi zmdi-sign-in"></i>
 			    </div>
