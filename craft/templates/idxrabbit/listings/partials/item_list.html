@@ -1,3 +1,5 @@
+{% import "macros/listings.html" as listingMacros %}
+
 {% if listing is defined and listing is not null %}
 <div class="listings-grid__item clickable wow flipInX material-hover" data-wow-offset="50" data-wow-duration="1s">
     <a href="/listings/{{listing.ListingId}}" class="media">
@@ -8,8 +10,8 @@
 
         <div class="media-body">
             <div class="listings-grid__body">
-                <small>{{- listing.StreetNumberNumeric -}}&nbsp;{{- listing.StreetName -}} {% if listing.StreetSuffix %}&nbsp;{{- listing.StreetSuffix -}}{% endif %},&nbsp;{{- listing.City -}}</small>
-            <h5>{{listing.PublicRemarks}}</h5>
+                <small>{{ listingMacros.fullAddress(listing, {separated: false}) }}</small>
+                <h5>{{listing.PublicRemarks}}</h5>
             </div>
             <ul class="listings-grid__attrs">
                 <li>
