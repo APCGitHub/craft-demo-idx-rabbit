@@ -16,6 +16,7 @@
 
         <script type="text/javascript">
             window.Craft = {};
+            window.Craft.siteUrl = "{{craft.config.siteUrl|e('js')}}";
             window.Craft.csrfTokenName = "{{ craft.config.csrfTokenName|e('js') }}";
             window.Craft.csrfTokenValue = "{{ craft.request.csrfToken|e('js') }}";
         </script>
