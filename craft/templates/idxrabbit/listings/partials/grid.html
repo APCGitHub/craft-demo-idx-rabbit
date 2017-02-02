@@ -4,10 +4,16 @@
 			<div class="col-sm-6 col-md-3">
 				{% include "listings/partials/item_grid.html" %}
 			</div>
+			{% if loop.index % 4 == 0 and loop.index > 1 %}
+				<!-- Add the extra clearfix for only the required viewport -->
+  				<div class="clearfix visible-md visible-lg"></div>
+			{% endif %}
 		{% endfor %}
 	{% else %}
 		<div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 			{% block emptyListings %}{% endblock %}
 		</div>
 	{% endif %}
+
+	{% block vueTemplates %}{% endblock %}
 </div>
