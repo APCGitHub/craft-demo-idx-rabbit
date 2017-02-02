@@ -29,13 +29,9 @@
 				this.http.faving = true;
 
 				this.$http.post('/actions/idxRabbit/prospects/favoriteListingAjax', data).then(res => {
-					let body = res.body;
-
 					this.http.faving = true;
 					this.did_like = true;
 				}).catch(err => {
-					let body = err.body;
-
 					this.http.faving = true;
 				});
 			}
