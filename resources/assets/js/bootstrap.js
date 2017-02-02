@@ -13,9 +13,11 @@ Vue.use(VueResource);
 Vue.http.interceptors.push((request, next) => {
     request.headers.set('X-CSRF-TOKEN', Craft.csrfTokenValue);
 
-    let body = request.body;
-    body[Craft.csrfTokenName] = Craft.csrfTokenValue;
-    request.body = body;
+    if(request.method !== 'GET') {
+        let body = request.body;
+    	body[Craft.csrfTokenName] = Craft.csrfTokenValue;
+    	request.body = body;
+    }
 
     next();
 });
@@ -30,7 +32,10 @@ Vue.prototype.filters = {
 		value = parseFloat(value);
 
 		return accounting.formatMoney(value, symbol, decimals, dec_symb, thous_symb);
-	}
+	},
+    slice(string = '', start = '' , end = '', trail = '') {
+        return string.substring(start, end) + trail;
+    }
 };
 
 window.$bus = new Vue();
