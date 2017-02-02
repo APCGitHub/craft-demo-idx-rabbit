@@ -24,117 +24,112 @@
 		</div>
 	{% endset %}
 
-	{##
-	# Should look into a common error block that we can reuse to keep things DRY
-	#}
-
-	{% if layoutClass == 'list' %}
-		{% if results['data'] is defined  %}
-			{% set listings = results.data %}
-		{% else %}
-			{{ Errors.api(results) }}
-		{% endif %}
-
-		{% embed "listings/partials/list.html" with {'listings': listings} %}
-			{% block emptyListings %}
-				{{ noListingsBlock }}
-			{% endblock %}
-			{% block aside %}
-				<aside class="col-sm-4 hidden-xs">
-				    <div class="card">
-				        <div class="card__header">
-				            <h2>Properties near your location</h2>
-				            <small>You may also be interested in these listings</small>
-				        </div>
-
-				        {% include "listings/partials/nearby.html" with {
-				        	useMap: true,
-				        	where: 'Latitude ne 0 and Longitude ne 0'
-				        } %}
-				    </div>
-
-				    <div class="card">
-				        <div class="card__header">
-				            <h2>Talk to an Agent</h2>
-				            <small>Nullam dolorid nibh ultricies vehicula elit</small>
-				        </div>
-				        <div class="list-group">
-				            {% include "agents/partials/agent_simple_list.html" %}
-
-				            <a href="" class="view-more">View all Agents</a>
-				        </div>
-				    </div>
-
-				    <div class="card subscribe mdc-bg-light-blue">
-				        <div class="subscribe__icon">
-				            <i class="zmdi zmdi-email"></i>
-				        </div>
-
-				        <h2>Subscribe for Newsletters</h2>
-				        <small>Curabitur blandit tempus porttitor adipiscing maecenas faucibus mollis interdum</small>
-
-				        <form>
-				            <div class="form-group form-group--light form-group--float">
-				                <input type="text" class="form-control text-center" placeholder="Email Address">
-				                <i class="form-group__bar"></i>
-				            </div>
-
-				            <button class="btn btn--circle">
-				                <i class="zmdi zmdi-check mdc-text-light-blue"></i>
-				            </button>
-				        </form>
-				    </div>
-				</aside>
-			{% endblock %}
-		{% endembed %}
-	{% elseif layout == 'grid' %}
-		{% if results['errors'] is defined and results.errors %}
-			{% for error in results.errors %}
-				{% if error['message'] is defined %}
-					<div class="alert alert-danger">{{error.message}}</div>
-				{% else %}
-					<div class="alert alert-danger">An error occurred</div>
-				{% endif %}
-			{% endfor %}
-		{% else %}
-			{% set listings = results.data %}
-		{% endif %}
-
-		{% embed "listings/partials/grid.html" with {'listings': listings} %}
-			{% block emptyListings %}
-				{{ noListingsBlock }}
-			{% endblock %}
-		{% endembed %}
-
-		<load-more></load-more>
-	{% elseif layout == 'map' %}
-		{% if results['errors'] is defined and results.errors %}
-			{% for error in results.errors %}
-				{% if error['message'] is defined %}
-					<div class="alert alert-danger">{{error.message}}</div>
-				{% else %}
-					<div class="alert alert-danger">An error occurred</div>
-				{% endif %}
-			{% endfor %}
-		{% else %}
-			{% set listings = results.data %}
-		{% endif %}
-
-		<div class="card">
-			<div class="card__body" style="postion: relative; height: 600px">
-				<listings-map :listings="{{ listings | json_encode }}"></listings-map>
-			</div>
-		</div>
+	{% if results['data'] is defined  %}
+		{% set listings = results.data %}
+	{% else %}
+		{{ Errors.api(results) }}
 	{% endif %}
 
-	{% include "forms/sideSearch.html" %}
+	<listing-results inline-template>
+		<div>
+			{# List layout #}
+			{% if layoutClass == 'list' %}
+				{% embed "listings/partials/list.html" with {'listings': listings} %}
+					{% block emptyListings %}
+						{{ noListingsBlock }}
+					{% endblock %}
 
-	<!-- Advanced Listing Search -->
-	<button class="btn btn--action btn--circle" data-rmd-action="block-open" data-rmd-target="#advanced-side-search">
-	    <i class="zmdi zmdi-search-for"></i>
-	</button>
+					{% block vueTemplates %}
+						<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="list" :listing="listing" v-for="listing in listings" :liked="{{likedListing(listing.ListingId) ? 'true' : 'false'}}"></listing>
+					{% endblock %}
 
-	{% include "modals/socialLogin.html" %}
+					{% block aside %}
+						<aside class="col-sm-4 hidden-xs">
+						    <div class="card">
+						        <div class="card__header">
+						            <h2>Properties near your location</h2>
+						            <small>You may also be interested in these listings</small>
+						        </div>
+
+						        {% include "listings/partials/nearby.html" with {
+						        	useMap: true,
+						        	where: 'Latitude ne 0 and Longitude ne 0'
+						        } %}
+						    </div>
+
+						    <div class="card">
+						        <div class="card__header">
+						            <h2>Talk to an Agent</h2>
+						            <small>Nullam dolorid nibh ultricies vehicula elit</small>
+						        </div>
+						        <div class="list-group">
+						            {% include "agents/partials/agent_simple_list.html" %}
+
+						            <a href="" class="view-more">View all Agents</a>
+						        </div>
+						    </div>
+
+						    <div class="card subscribe mdc-bg-light-blue">
+						        <div class="subscribe__icon">
+						            <i class="zmdi zmdi-email"></i>
+						        </div>
+
+						        <h2>Subscribe for Newsletters</h2>
+						        <small>Curabitur blandit tempus porttitor adipiscing maecenas faucibus mollis interdum</small>
+
+						        <form>
+						            <div class="form-group form-group--light form-group--float">
+						                <input type="text" class="form-control text-center" placeholder="Email Address">
+						                <i class="form-group__bar"></i>
+						            </div>
+
+						            <button class="btn btn--circle">
+						                <i class="zmdi zmdi-check mdc-text-light-blue"></i>
+						            </button>
+						        </form>
+						    </div>
+						</aside>
+					{% endblock %}
+				{% endembed %}
+
+				<load-more v-show="show_load_more" v-on:success="appendListings" endpoint="/actions/idxRabbit/search/getSearchAjax" :search-id="{{search_id}}" :start-page="1"></load-more>
+			{% elseif layout == 'grid' %} {# Grid layout #}
+				{% embed "listings/partials/grid.html" with {'listings': listings} %}
+					{% block emptyListings %}
+						{{ noListingsBlock }}
+					{% endblock %}
+					
+					{% block vueTemplates %}
+						<template v-for="(listing, index) in listings">
+							<div class="col-sm-6 col-md-3">
+								<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="grid" :listing="listing" :liked="{{likedListing(listing.ListingId) ? 'true' : 'false'}}"></listing>
+							</div>
+							{# Clear fixes #}
+							<div v-if="(index+1) > 1 && (index+1) % 4 == 0" class="clearfix visible-md visible-lg"></div>
+							<div v-if="(index+1) > 1 && (index+1) % 2 == 0" class="clearfix visible-sm"></div>
+						</template>
+					{% endblock %}
+				{% endembed %}
+
+				<load-more v-show="show_load_more" order-by="ListPrice desc" v-on:success="appendListings" endpoint="/actions/idxRabbit/search/getSearchAjax" :search-id="{{search_id}}" :start-page="1"></load-more>
+			{% elseif layout == 'map' %} {# Map layout #}
+				<div class="card">
+					<div class="card__body" style="postion: relative; height: 600px">
+						<listings-map :listings="{{ listings | json_encode }}"></listings-map>
+					</div>
+				</div>
+			{% endif %}
+
+			{% include "forms/sideSearch.html" %}
+
+			<!-- Advanced Listing Search -->
+			<button class="btn btn--action btn--circle" data-rmd-action="block-open" data-rmd-target="#advanced-side-search">
+			    <i class="zmdi zmdi-search-for"></i>
+			</button>
+
+			{% include "modals/socialLogin.html" %}
+		</div>
+	</listing-results>
 {% else %}
 	<div class="row">
 		<div class="col-sm-12 col-md-8 col-md-offset-2">
