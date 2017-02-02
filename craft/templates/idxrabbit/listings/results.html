@@ -40,7 +40,9 @@
 					{% endblock %}
 
 					{% block vueTemplates %}
-						<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="list" :listing="listing" v-for="listing in listings" :liked="{{likedListing(listing.ListingId) ? 'true' : 'false'}}"></listing>
+						<template v-for="listing in listings">
+							<listing :has-social="{{hasSocial() ? 'true' : 'false'}}" type="list" :listing="listing" :liked="{{likedListing(listing.ListingId) ? 'true' : 'false'}}"></listing>
+						</template>
 					{% endblock %}
 
 					{% block aside %}
@@ -92,7 +94,7 @@
 					{% endblock %}
 				{% endembed %}
 
-				<load-more v-show="show_load_more" v-on:success="appendListings" endpoint="/actions/idxRabbit/search/getSearchAjax" :search-id="{{search_id}}" :start-page="1"></load-more>
+				<load-more v-show="show_load_more" v-on:success="appendListings" endpoint="/actions/idxRabbit/search/getSearchAjax" order-by="ListPrice desc" :search-id="{{search_id}}" :start-page="1"></load-more>
 			{% elseif layout == 'grid' %} {# Grid layout #}
 				{% embed "listings/partials/grid.html" with {'listings': listings} %}
 					{% block emptyListings %}
