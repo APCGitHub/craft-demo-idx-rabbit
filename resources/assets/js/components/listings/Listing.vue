@@ -42,7 +42,7 @@
 	<div v-else class="listings-grid__item clickable wow flipInX material-hover" data-wow-offset="50" data-wow-duration="1s">
 	    <a :href="'/listings/' + listing.ListingId" class="media">
 	        <div class="listings-grid__main pull-left">
-	            <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
+	            <img :src="photo" alt="">
 	            <div class="listings-grid__price">{{ filters.money(listing.ListPrice, '$', 0) }}</div>
 	        </div>
 
