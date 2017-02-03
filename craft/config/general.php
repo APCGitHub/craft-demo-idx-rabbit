@@ -25,21 +25,24 @@ return array(
     '.app' => array(
         'siteName' => getenv('APP_NAME', ''),
         'siteUrl' => getenv('APP_URL', ''),
-        'environmentVariables' => array(),
-        'devMode' => getenv('APP_DEBUG', false),
+        'environmentVariables' => array(
+        ),
+        'devMode' => getenv('APP_DEBUG', TRUE),
     ),
 
     '.dev' => array(
         'siteName' => getenv('APP_NAME', ''),
         'siteUrl' => getenv('APP_URL', ''),
-        'environmentVariables' => array(),
-        'devMode' => getenv('APP_DEBUG', false),
+        'environmentVariables' => array(
+        ),
+        'devMode' => getenv('APP_DEBUG', TRUE),
     ),
 
     '.com' => array(
         'siteName' => getenv('APP_NAME', ''),
         'siteUrl' => getenv('APP_URL', ''),
-        'environmentVariables' => array(),
+        'environmentVariables' => array(
+        ),
         'devMode' => getenv('APP_DEBUG', false),
     )    
 );
