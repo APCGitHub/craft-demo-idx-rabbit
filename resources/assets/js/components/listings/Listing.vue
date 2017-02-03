@@ -2,7 +2,7 @@
 	<div v-if="type === 'grid'" class="listings-grid__item wow zoomIn clickable material-hover" data-wow-duration="0.5s">
 	    <a :href="'/listings/' + listing.ListingId">
 	        <div class="listings-grid__main">
-	            <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
+	            <img :src="photo" alt="">
 	            <div class="listings-grid__price">{{ filters.money(listing.ListPrice, '$', 0) }}</div>
 	        </div>
 
@@ -129,6 +129,14 @@
 					url += '/';
 
 				url += `listings/${this.listing.ListingId}`;
+
+				return url;
+			},
+			photo() {
+				let url = 'http://placehold.it/300x250';
+
+				if(this.listing.photos && this.listing.photos.length)
+					url = this.listing.photos[0];
 
 				return url;
 			}

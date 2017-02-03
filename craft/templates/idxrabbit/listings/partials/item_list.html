@@ -1,10 +1,16 @@
 {% import "macros/listings.html" as listingMacros %}
 
 {% if listing is defined and listing is not null %}
+{% set photo = "http://placehold.it/300x200" %}
+
+{% if listing['photos'] is defined and listing.photos | length %}
+    {% set photo = listing.photos[0] %}
+{% endif %}
+
 <div class="listings-grid__item clickable wow flipInX material-hover" data-wow-offset="50" data-wow-duration="1s">
     <a href="/listings/{{listing.ListingId}}" class="media">
         <div class="listings-grid__main pull-left">
-            <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
+            <img src="{{photo}}" alt="">
             <div class="listings-grid__price">${{ listing.ListPrice | number_format(0, '.', ',') }}</div>
         </div>
 
