@@ -54,6 +54,8 @@
         </div>
     </header>
 
+    {% set hasPhotos = (listing['photos'] is defined and listing.photos | length) ? true : false %}
+
     <div class="row">
         <listing-details inline-template>
             <div>
@@ -61,24 +63,16 @@
                     <div class="card">
                         <div class="detail-media">
                             <div class="tab-content">
-                                <div class="tab-pane fade in active light-gallery" id="detail-media-images">
-                                    <a href="/img/demo/listing/16.jpg">
-                                        <img src="https://placeholdit.imgix.net/~text?&w=960&h=600" alt="">
-                                    </a>
-                                    <a href="/img/demo/listing/1.jpg">
-                                        <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
-                                    </a>
-                                    <a href="/img/demo/listing/2.jpg">
-                                        <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
-                                    </a>
-                                    <a href="/img/demo/listing/3.jpg">
-                                        <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
-                                    </a>
-                                    <a href="/img/demo/listing/4.jpg">
-                                        <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="">
-                                    </a>
-                                </div>
-                                <div class="tab-pane fade light-gallery" id="detail-media-floorplan">
+                                {% if hasPhotos %}
+                                    <div class="tab-pane fade in active light-gallery" id="detail-media-images">
+                                        {% for photo in listing.photos %}
+                                            <a href="{{photo}}">
+                                                <img src="{{photo}}" alt="">
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="tab-pane fade {% if not hasPhotos %} in active {% endif %} light-gallery" id="detail-media-floorplan">
                                     <a href="/img/demo/floor-plan.png">
                                         <img src="https://placeholdit.imgix.net/~text?&w=1000&h=464" alt="">
                                     </a>
@@ -89,8 +83,14 @@
                             </div>
 
                             <ul class="detail-media__nav hidden-print">
-                                <li class="active"><a href="#detail-media-images" data-toggle="tab"><i class="zmdi zmdi-collection-image"></i></a></li>
-                                <li><a href="#detail-media-floorplan" data-toggle="tab"><i class="zmdi zmdi-view-dashboard"></i></a></li>
+                                {% if listing['photos'] is defined and listing.photos | length %}
+                                    <li>
+                                        <a href="#detail-media-images" data-toggle="tab">
+                                            <i class="zmdi zmdi-collection-image"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li {% if not hasPhotos %}class="active"{% endif %}><a href="#detail-media-floorplan" data-toggle="tab"><i class="zmdi zmdi-view-dashboard"></i></a></li>
                                 <li><a href="#detail-media-map" data-toggle="tab"><i class="zmdi zmdi-map"></i></a></li>
                             </ul>
                         </div>
