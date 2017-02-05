@@ -3,7 +3,7 @@
 
 {% set results = listing(id) %}
 
-{% cache 'details' 1800 %}
+{# cache 'details' 1800 #}
 
 {% if results['data'] is defined %}
     {% set listing = results.data %}
@@ -54,8 +54,7 @@
         </div>
     </header>
 
-    {% set hasPhotos = (listing['photos'] is defined and listing.photos | length) ? true : false %}
-
+    {% set hasPhotos = (listing.listing['photos'] is defined and listing.listing.photos | length) ? true : false %}
     <div class="row">
         <listing-details inline-template>
             <div>
@@ -65,9 +64,9 @@
                             <div class="tab-content">
                                 {% if hasPhotos %}
                                     <div class="tab-pane fade in active light-gallery" id="detail-media-images">
-                                        {% for photo in listing.photos %}
-                                            <a href="{{photo}}">
-                                                <img src="{{photo}}" alt="">
+                                        {% for photo in listing.listing['photos'] %}
+                                            <a href="{{photo.url}}">
+                                                <img src="{{photo.url}}" alt="">
                                             </a>
                                         {% endfor %}
                                     </div>
@@ -83,7 +82,7 @@
                             </div>
 
                             <ul class="detail-media__nav hidden-print">
-                                {% if listing['photos'] is defined and listing.photos | length %}
+                                {% if listing.listing['photos'] is defined and listing.listing.photos | length %}
                                     <li>
                                         <a href="#detail-media-images" data-toggle="tab">
                                             <i class="zmdi zmdi-collection-image"></i>
@@ -212,4 +211,4 @@
     {{ Errors.api(results) }}
 {% endif %}
 
-{% endcache %}
+{# endcache #}
