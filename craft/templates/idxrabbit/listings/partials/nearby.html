@@ -4,7 +4,7 @@
 	'$orderby': (orderBy is defined) ? orderBy : '',
 }) %}
 
-{% cache 'nearby' 3600 %}
+{# cache 'nearby' 3600 #}
 
 {% if results['errors'] is defined %}
 	{% for error in results.errors %}
@@ -27,4 +27,4 @@
 		</div>
 	{% endif %}
 {% endif %}
-{% endcache %}
+{# endcache #}

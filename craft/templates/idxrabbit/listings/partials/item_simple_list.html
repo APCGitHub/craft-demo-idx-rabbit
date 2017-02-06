@@ -1,9 +1,17 @@
 {% import "macros/listings.html" as listingMacros %}
 
 {% if listing is defined and listing is not null %}
+
+{% set photo = 'http://placehold.it/300x250' %}
+
+{% if listing.listing['photos'] is defined and listing.listing.photos | length %}
+	{% set photo = cloudinary(listing.listing.photos[0].url, {width: 150}) %}
+{% endif %}
+
+
 <a href="/listings/{{listing.ListingId}}" class="list-group-item media">
     <div class="pull-left">
-        <img src="https://placeholdit.imgix.net/~text?&w=400&h=266" alt="" class="list-group__img" width="65">
+        <img src="{{photo}}" alt="" class="list-group__img" width="65">
     </div>
     <div class="media-body list-group__text">
         <strong>{{ listingMacros.fullAddress(listing) }}</strong>

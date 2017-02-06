@@ -3,7 +3,7 @@
 
 {% set results = listing(id) %}
 
-{% cache 'details' 1800 %}
+{# cache 'details' 1800 #}
 
 {% if results['data'] is defined %}
     {% set listing = results.data %}
@@ -54,8 +54,7 @@
         </div>
     </header>
 
-    {% set hasPhotos = (listing['listing']['photos'] is defined and listing.listing.photos | length) ? true : false %}
-
+    {% set hasPhotos = (listing.listing['photos'] is defined and listing.listing.photos | length) ? true : false %}
     <div class="row">
         <listing-details inline-template>
             <div>
@@ -212,4 +211,4 @@
     {{ Errors.api(results) }}
 {% endif %}
 
-{% endcache %}
+{# endcache #}
