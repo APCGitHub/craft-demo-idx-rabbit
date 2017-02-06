@@ -4,6 +4,9 @@
 			<div class="col-sm-6 col-md-3">
 				{% include "listings/partials/item_grid.html" %}
 			</div>
+			{% if loop.index % 2 == 0 and loop.index > 1 %}
+				<div class="clearfix visible-sm"></div>
+			{% endif %}
 			{% if loop.index % 4 == 0 and loop.index > 1 %}
 				<!-- Add the extra clearfix for only the required viewport -->
   				<div class="clearfix visible-md visible-lg"></div>
