@@ -1,6 +1,9 @@
 <template>
 	<div class="load-more text-center">
-		<a href="" @click.prevent="fetch" class="waves-effect">&nbsp;<i class="zmdi zmdi-refresh"></i>Load More</a>
+		<a v-if="!http.fetching" href="" @click.prevent="fetch" class="waves-effect">&nbsp;<i class="zmdi zmdi-refresh"></i>Load More</a>
+		<button v-else class="btn btn-default waves-effect" disabled>
+			<i class="zmdi zmdi-refresh zmdi-hc-spin"></i>&nbsp;Loading
+		</button>
 	</div>
 </template>
 
@@ -21,6 +24,9 @@
 		},
 		data() {
 			return {
+				http: {
+					fetching: false
+				},
 				page: this.startPage
 			};
 		},
@@ -62,14 +68,18 @@
 
 				url += query;
 
+				this.http.fetching = true;
+
 				this.$http.get(url).then(res => {
 					let body = res.body;
 
 					//increment the page counter by one
 					this.page++;
 					this.$emit('success', body);
+
+					this.http.fetching = false;
 				}).catch(err => {
-					let body = err.body;
+					this.http.fetching = false;
 				});
 			}
 		}

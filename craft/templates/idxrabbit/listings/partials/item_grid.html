@@ -3,8 +3,8 @@
 {% if listing is defined and listing is not null %}
 {% set photo = "http://placehold.it/300x250" %}
 
-{% if listing['photos'] is defined and listing.photos | length %}
-    {% set photo = listing.photos[0] %}
+{% if listing.listing['photos'] is defined and listing.listing.photos | length %}
+    {% set photo = cloudinary(listing.listing.photos[0].url, {'width': 400}) %}
 {% endif %}
 
 <div class="listings-grid__item wow zoomIn clickable material-hover" data-wow-duration="0.5s">

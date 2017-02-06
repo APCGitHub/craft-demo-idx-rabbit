@@ -135,8 +135,10 @@
 			photo() {
 				let url = 'http://placehold.it/300x250';
 
-				if(this.listing.photos && this.listing.photos.length)
-					url = this.listing.photos[0];
+				if(this.listing.listing && this.listing.listing.photos && this.listing.listing.photos.length) {
+					url = 'http://res.cloudinary.com/anecka/image/fetch/w_300/';
+					url += this.listing.listing.photos[0].url;
+				}
 
 				return url;
 			}

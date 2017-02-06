@@ -54,7 +54,7 @@
         </div>
     </header>
 
-    {% set hasPhotos = (listing['photos'] is defined and listing.photos | length) ? true : false %}
+    {% set hasPhotos = (listing['listing']['photos'] is defined and listing.listing.photos | length) ? true : false %}
 
     <div class="row">
         <listing-details inline-template>
@@ -65,9 +65,9 @@
                             <div class="tab-content">
                                 {% if hasPhotos %}
                                     <div class="tab-pane fade in active light-gallery" id="detail-media-images">
-                                        {% for photo in listing.photos %}
-                                            <a href="{{photo}}">
-                                                <img src="{{photo}}" alt="">
+                                        {% for photo in listing.listing.photos %}
+                                            <a href="{{photo.url}}">
+                                                <img src="{{cloudinary(photo.url, {width: 1200})}}" alt="">
                                             </a>
                                         {% endfor %}
                                     </div>
@@ -83,8 +83,8 @@
                             </div>
 
                             <ul class="detail-media__nav hidden-print">
-                                {% if listing['photos'] is defined and listing.photos | length %}
-                                    <li>
+                                {% if hasPhotos %}
+                                    <li class="active">
                                         <a href="#detail-media-images" data-toggle="tab">
                                             <i class="zmdi zmdi-collection-image"></i>
                                         </a>
